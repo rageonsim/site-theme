@@ -295,7 +295,16 @@ function renderProducts(){
         grid_item_template.find(price_class).html(product.price);
         grid_item_template.find(compare_price_class).html(product.compare_at_price);
 
-        grid_item_template.find('img').attr('src',product.featured_image);
+        /** Start MikeS Fixes: 2015-08-19 */
+        // fix ready-to-ship banner changing src
+        grid_item_template.find('img').not('.ready-to-ship-banner').attr('src',product.featured_image);
+        
+        // fix ready-to-ship banner showing on everything
+        product_tags = !!product.tags.split ? product.tags.split(",") : product.tags;
+        ((_rts_banner=grid_item_template.find('img.ready-to-ship-banner'))[((product_tags.indexOf("ready-to-ship")==-1)?"hide":"show")]).call(_rts_banner);
+
+        /** /End MikeS Fixes: 2015-08-19/ */
+
       	grid_item_template.find('a').attr('href',product.url);
         grid_item_template.clone().appendTo(grid_item_container_class);
   	}
