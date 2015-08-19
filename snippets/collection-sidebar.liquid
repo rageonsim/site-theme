@@ -1,5 +1,37 @@
-<input type="hidden" name="collection_url" id="collection_url" value="{{ collections[collection.handle].url }}">
+<input type="hidden" name="collection_url" id="collection_url" value="{{ collection.url }}/{{ current_tags }}">
 <input type="hidden" name="pagination_pages" id="pagination_pages" value="{{ paginate.pages }}">
+
+{% assign default_sizes = '' %}
+
+{% if collection.tags contains 'size-XS' %}
+  {% capture default_sizes %}{{ default_sizes }}~~size-XS{% endcapture %}
+{% endif %}
+{% if collection.tags contains 'size-S' %}
+  {% capture default_sizes %}{{ default_sizes }}~~size-S{% endcapture %}
+{% endif %}
+{% if collection.tags contains 'size-M' %}
+  {% capture default_sizes %}{{ default_sizes }}~~size-M{% endcapture %}
+{% endif %}
+{% if collection.tags contains 'size-L' %}
+  {% capture default_sizes %}{{ default_sizes }}~~size-L{% endcapture %}
+{% endif %}
+{% if collection.tags contains 'size-XL' %}
+  {% capture default_sizes %}{{ default_sizes }}~~size-XL{% endcapture %}
+{% endif %}
+{% if collection.tags contains 'size-XXL' %}
+  {% capture default_sizes %}{{ default_sizes }}~~size-XXL{% endcapture %}
+{% endif %}
+{% if collection.tags contains 'size-XXXL' %}
+  {% capture default_sizes %}{{ default_sizes }}~~size-XXXL{% endcapture %}
+{% endif %}
+{% if collection.tags contains 'size-XXXXL' %}
+  {% capture default_sizes %}{{ default_sizes }}~~size-XXXXL{% endcapture %}
+{% endif %}
+{% if collection.tags contains 'size-XXXXXL' %}
+  {% capture default_sizes %}{{ default_sizes }}~~size-XXXXXL{% endcapture %}
+{% endif %}
+{% assign default_sizes_string = default_sizes %}
+{% assign default_sizes = default_sizes | remove_first: '~~' | split: '~~' %}
 
 {{ 'collection-ajax.js' | asset_url | script_tag }}
 <div class="sidebar-filters">
@@ -7,7 +39,7 @@
   <h4>Refine By</h4>
 
 	{% assign has_type = false %}
-  
+
   	{% for tag in current_tags %}
   		{% for type in collection.all_types %}
   			{% if tag == type %}
@@ -15,7 +47,7 @@
   			{% endif %}
   		{% endfor %}
   	{% endfor %}
-  
+
   {% if has_type == false %}
   {% if collection.all_types.size > 1 %}
   <div class="filter filter-type open">
@@ -24,14 +56,11 @@
       <h5>Product Type</h5>
     </div>
 
-    <div class="filter-list">
+    <div class="filter-list product-type-filters">
       <ul class="advanced-filters">
-        
+
       {% for product_type in collection.all_types %}
-        {% if product_type contains "&" %}
-        {% else %}
         <li class="checkbox advanced-filter"><input value="type-{{ product_type | handleize | downcase }}" type="checkbox" id="type-{{ product_type | handleize }}"><label for="type-{{ product_type | handleize }}">{{ product_type }}</label></li>
-        {% endif %}
       {% endfor %}
 
       </ul>
@@ -40,7 +69,7 @@
   {% endif %}
   {% endif %}
 
-  
+
   <div class="filter filter-size open">
     <div class="filter-title">
       <i class="fa fa-chevron-down"></i>
@@ -48,12 +77,17 @@
     </div>
     <div class="filter-list">
       <ul>
+        {% for size in default_sizes %}
+          <li class="checkbox advanced-filter"><input value="{{ size | handleize }}" type="checkbox" id="{{ size | handleize }}"><label for="{{ size | handleize }}">{{ size | remove: 'size-' }}</label></li>
+        {% endfor %}
         {% for tag in collection.tags %}
         	{% if tag contains 'size-' %}
+            {% unless default_sizes_string contains tag %}
                 {% assign tag_found = tag | remove: 'size-' %}
                 {% if tag_found != '' %}
                   <li class="checkbox advanced-filter"><input value="{{ tag | handleize }}" type="checkbox" id="{{ tag | handleize }}"><label for="{{ tag | handleize }}">{{ tag | remove: 'size-' }}</label></li>
-        		{% endif %}
+    		        {% endif %}
+            {% endunless %}
         	{% endif %}
         {% endfor %}
       </ul>
@@ -107,9 +141,9 @@
   {% for product_vendor in collection.all_vendors %}
   	{% assign brandCount = forloop.index %}
   {% endfor %}
- 
+
   {% if brandCount == 1 %}
-  
+
   {% else %}
 	<div class="filter filter-brands closed">
       <div class="filter-title">
@@ -155,29 +189,28 @@
 
 
 <script>
-  
-  // Apply sticky when the products are loaded, so the sticky parent has the accurate height 
-  // (don't load sticky on mobile)
-  
-  $(document).ready(function(){
-    
-    var headerHeightOffest = $('.header-bar').outerHeight() +10;
-    
-    
-    // wait until products are loaded before setting the sidebar height as well as making the sidebar sticky
-    
-    setTimeout(function(){  
 
-      
+  // Apply sticky when the products are loaded, so the sticky parent has the accurate height
+  // (don't load sticky on mobile)
+
+  $(document).ready(function(){
+
+    var headerHeightOffest = $('.header-bar').outerHeight() +10;
+
+
+    // wait until products are loaded before setting the sidebar height as well as making the sidebar sticky
+
+    setTimeout(function(){
+
+
       if ($(window).width() < 768) {
-        
+
         //don't make it sticky
-      
+
       } else {
         var containterHeight = $('.collection-container').outerHeight();
       	$(".pos-rel").css('height', containterHeight);
 
-        
         $(".sidebar-filters").stick_in_parent({
           offset_top: headerHeightOffest,
           parent: ".pos-rel",
@@ -185,53 +218,57 @@
         });
       }
 
-    }, 2000);
+    }, 100);
 
   });
-  
-  
+
+
   //when you click on a title, make it open and close, also recalc height of sticky sidebar
   //also make sure collection containers size is larger than sticky sidebar to prevent issues
 
   $('.filter-title').click(function(){
     $(this).parent().toggleClass('open');
     $(this).parent().toggleClass('closed');
-    
+
     var sidebarSize = $('.sidebar-filters').outerHeight();
     $('.collection-container').css('min-height', sidebarSize);
-    
-    $(".sidebar-filters").trigger("sticky_kit:recalc");
 
+    $(".sidebar-filters").trigger("sticky_kit:recalc");
+    checkScroll();
   });
-  
-  
+
+
   // update the height of the sticky container on filter change
-  
+
   $('.filter-list input[type=checkbox]').change(function (e) {
-    
-     setTimeout(function(){  
-       
+    cur_index = 0;
+    var scroll_offset = $(this).parents('.filter-list').scrollTop();
+    $(this).parents('.filter-list').attr('data-scroll',scroll_offset).addClass('fix-scroll');
+
+     setTimeout(function(){
        $(".sidebar-filters").trigger("sticky_kit:recalc");
-        
+       checkScroll();
      }, 1250);
 
 
   });
-  
+
   //if bigger than 767, resize collection based on scrolling
-  
+
   if ($(window).width() > 767) {
     $(window).scroll(function() {
       var containterHeight = $('.collection-container').outerHeight();
       $(".pos-rel").css('height', containterHeight);
+      checkScroll();
     });
   } else {
   	//do not do this
   }
 
-  
+
+
   // only one filter can be checked in the sort by filter group
-  
+
   $('.filter-sort-by input[type=checkbox]').change(function (e) {
 
       if($(this).prop('checked')==false){
@@ -240,9 +277,25 @@
       else {
         $(this).parents(".filter").find('input:checked').prop('checked', false);
         $(this).prop('checked', true);
-      } 
+      }
   });
 
+
+  cur_index = 0;
+
+  function checkScroll(){
+    cur_index++;
+    $('.filter-list.fix-scroll').each(function(){
+      var offset = $(this).attr('data-scroll');
+      $(this).attr('data-index',cur_index);
+      $(this).scrollTop(offset);
+    });
+    console.log(cur_index);
+    if(cur_index>5){
+      cur_index=0;
+      $('.filter-list.fix-scroll').removeClass('fix-scroll').attr('data-scroll','');
+    }
+  }
+
+
 </script>
-
-

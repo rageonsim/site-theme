@@ -341,3 +341,14 @@ a[href="http://snapshirt.com/"] {
   }
   
 }
+/* Bold Collection Fixes - July 14 */
+.collection-menu ul.third-menu {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+
+.open .filter-list.product-type-filters {
+	max-height: 240px!important; 
+}

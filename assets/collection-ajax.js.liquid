@@ -1,6 +1,6 @@
-/*==================================================
+/*==============================================================================
 DEFINE GLOBAL VARIABLES
-==================================================*/
+==============================================================================*/
 var collection_url = $('#collection_url').val();
 var pagination_pages = $('#pagination_pages').val()*1;
 var pagination = 100;
@@ -44,11 +44,11 @@ loadCollectionJSON();
 $(function(){
     listenForFilters();
 });
-  
 
-/*==================================================
+
+/*==============================================================================
 LOAD COLLECTION JSON
-==================================================*/
+==============================================================================*/
 function loadCollectionJSON(){
     var pages_loaded = 0;
   	collection_json = '{"products": [';
@@ -69,14 +69,14 @@ function loadCollectionJSON(){
                     convertJSON();
                 }
           }
-        }); 
+        });
     }
 }
 
 
-/*==================================================
+/*==============================================================================
 CONVERT JSON STRING TO JSON
-==================================================*/
+==============================================================================*/
 function convertJSON(){
     collection_json = collection_json.slice(0,-1);
     collection_json += ']}';
@@ -88,9 +88,9 @@ function convertJSON(){
 }
 
 
-/*==================================================
+/*==============================================================================
 LISTEN FOR FILTER CLICKS
-==================================================*/
+==============================================================================*/
 function listenForFilters(){
   	$(document).on('change', '.filter input', function(event){
   		event.preventDefault();
@@ -117,9 +117,9 @@ function listenForFilters(){
 }
 
 
-/*==================================================
+/*==============================================================================
 GET ACTIVE FILTERS
-==================================================*/
+==============================================================================*/
 function getActiveFilters(){
 	active_filters = [];
   $('.clear-this').remove();
@@ -138,7 +138,7 @@ function getActiveFilters(){
                 active_filters.push(group);
             }
       		if(found_an_active_filter){
-        		
+
               	//$(this).find('h5').append('<a href="#" class="clear-this">Clear</a>');
       		}
         });
@@ -156,9 +156,9 @@ function getActiveFilters(){
 }
 
 
-/*==================================================
+/*==============================================================================
 CLEAR FILTERS
-==================================================*/
+==============================================================================*/
 $(function(){
 	$(document).on('click','.clear-all',function(event){
   		event.preventDefault();
@@ -167,9 +167,9 @@ $(function(){
 });
 
 
-/*==================================================
+/*==============================================================================
 GET ACTIVE PRODUCTS
-==================================================*/
+==============================================================================*/
 function getActiveProducts(){
   	active_products = [];
   	$.each(complete_json.products, function(index, product){
@@ -215,7 +215,7 @@ function getActiveProducts(){
               		}
               	}
             });
-          	
+
           	if(found_subfilters==subfilters.length){
             	found_filters = true;
           	}
@@ -224,22 +224,22 @@ function getActiveProducts(){
         	active_products.push(product);
       	}
   	});
-  
+
   	if(active_products.length==0 && possibleFilters.length==0){
     	active_products = complete_json.products;
   	}
-  
+
   	//Reset page number to 1
-  	current_page = 1;	
+  	current_page = 1;
   	renderProducts();
     convertCurrency();
     loadFilterJSON();
 }
 
 
-/*==================================================
+/*==============================================================================
 RENDER PRODUCTS
-==================================================*/
+==============================================================================*/
 function renderProducts(){
   	var offset = $('#PageContainer').offset();
   	$("body").scrollTop(offset.top);
@@ -248,45 +248,45 @@ function renderProducts(){
         grid_item_template = $(grid_item_class).first().clone();
       	remove_sticky = $('.remove-sticky').detach();
       	pagination_template = $(pagination_class).detach();
-      	
-      	//Add class to the previous button in the pagination 
+
+      	//Add class to the previous button in the pagination
       	pagination_template.find('li').first().addClass('prev');
-      
+
       	//Add class to the next button in the pagination
       	pagination_template.find('li').last().addClass('next');
-      
+
       	//Add class to the first page link in the pagination
       	pagination_template.find('li:nth-child(2)').attr('class','').addClass('paginate-template');
-      
+
       	pagination_template.find('li').not('.prev,.next,.paginate-template').remove();
-      	
+
     }
-  
-  
+
+
   	//Clear the collection container
     $(grid_item_container_class).html('');
-  	
+
   	//Sort products by original collection order because products come in random order from async ajax call
   	function sortCollectionOrder(x,y){
     	return x.collection_order - y.collection_order;
   	}
   	active_products.sort(sortCollectionOrder);
-  	
+
   	//Set pagination info
   	var page_offset = (current_page*pagination)-pagination;
   	var page_limit = page_offset+100;
-  
+
   	if(page_limit>active_products.length){
     	page_limit = active_products.length;
   	}
-  
+
   	//Console log a table of pagination info
   	var page_debug_table = [
       {"number of products": active_products.length, "page_offset": page_offset, "page_limit": page_limit}
     ];
   	//console.table(page_debug_table);
-  
-  	
+
+
   	//Add products to DOM
   	for(var i=page_offset; i<page_limit; i++){
     	var product = active_products[i];
@@ -299,27 +299,31 @@ function renderProducts(){
       	grid_item_template.find('a').attr('href',product.url);
         grid_item_template.clone().appendTo(grid_item_container_class);
   	}
-  
+
   	if(active_products.length==0){
      	 $(grid_item_container_class).html('<p class="empty-collection">Sorry, there are no products in this collection</p>');
     }
-  	
+
   	renderPagination();
+    hideUnavailableHeaderNav();
+    setTimeout(function(){
+      checkScroll();
+    }, 100);
 }
 
 
-/*==================================================
+/*==============================================================================
 RENDER PAGINATION
-==================================================*/
+==============================================================================*/
 function renderPagination(){
 	$(pagination_container).html('');
   	var pagination_page_button_template = pagination_template.find('.paginate-template').first().detach();
   	pagination_template.find('.paginate-template').remove();
   	pagination_template.find('.dots').remove();
-  
-  
+
+
   	var current_num_of_pages = Math.ceil(active_products.length/pagination);
-  
+
   	/* Only show 2 pages before and 2 pages after active page */
   	var start_page = current_page-2;
   	if(start_page<1){
@@ -329,8 +333,8 @@ function renderPagination(){
   	if(end_page>current_num_of_pages){
     	end_page=current_num_of_pages;
   	}
-  
-  
+
+
   	for(var i=start_page; i<=end_page; i++){
       	if(i==current_page){
           	pagination_page_button_template.addClass('active');
@@ -341,24 +345,23 @@ function renderPagination(){
       	}
       	pagination_page_button_template.clone().insertBefore(pagination_template.find('.next'));
   	}
-  
-  
+
+
   	//Console log a table of pagination info
   	var page_debug_table = [
       {"number of products": active_products.length, "number of pages": current_num_of_pages, "start page": start_page, "end page": end_page}
     ];
-  	//console.table(page_debug_table);
-  
+
   	pagination_template.find('.prev').removeClass('disabled').html('<a href="#" class="pagination-prev">&larr;</a>');
   	pagination_template.find('.next').removeClass('disabled').html('<a href="#" class="pagination-next">&rarr;</a>');
-  	
+
   	if(current_page==1){
     	pagination_template.find('.prev').addClass('disabled');
   	}
   	if(current_page==current_num_of_pages){
     	pagination_template.find('.next').addClass('disabled');
   	}
-  
+
   	if(start_page>1){
     	pagination_template.find('.prev').after('<li class="dots"><span>...</span></li>');
       	pagination_page_button_template.html('<a href="#" class="pagination-link page-'+1+'" data-page="'+1+'">'+1+'</a>');
@@ -369,17 +372,17 @@ function renderPagination(){
       	pagination_page_button_template.html('<a href="#" class="pagination-link page-'+current_num_of_pages+'" data-page="'+current_num_of_pages+'">'+current_num_of_pages+'</a>');
       	pagination_page_button_template.clone().insertBefore(pagination_template.find('.next'));
   	}
-  
+
   	if(active_products.length>0){
-  		pagination_template.clone().appendTo(pagination_container); 
+  		pagination_template.clone().appendTo(pagination_container);
     }
-  	
+
 }
 
 
-/*==================================================
+/*==============================================================================
 LISTEN FOR PAGINATION CLICKS
-==================================================*/
+==============================================================================*/
 $(function(){
     $(document).on('click', '.pagination-link', function(event){
         event.preventDefault();
@@ -387,7 +390,7 @@ $(function(){
         current_page = page_clicked;
         renderProducts();
     });
-  
+
     $(document).on('click', '.pagination-next', function(event){
   		event.preventDefault();
       	if($(this).parent().hasClass('disabled')==false){
@@ -395,7 +398,7 @@ $(function(){
           	renderProducts();
       	}
   	});
-  
+
   	$(document).on('click', '.pagination-prev', function(event){
   		event.preventDefault();
       	if($(this).parent().hasClass('disabled')==false){
@@ -406,13 +409,13 @@ $(function(){
 });
 
 
-/*==================================================
+/*==============================================================================
 GET POSSIBLE FILTERS
-==================================================*/
+==============================================================================*/
 function getPossibleFilters(arr) {
     if (arr.length == 1) {
     	return arr[0];
-    } 
+    }
     else {
     	var result = [];
     	var allCasesOfRest = getPossibleFilters(arr.slice(1));
@@ -426,9 +429,9 @@ function getPossibleFilters(arr) {
 }
 
 
-/*==================================================
+/*==============================================================================
 GET AVAILABLE SIDEBAR FILTERS
-==================================================*/
+==============================================================================*/
 function loadFilterJSON(){
 
 	$('.filter').show();
@@ -489,15 +492,15 @@ function loadFilterJSON(){
 	});
 
 
-	/*--------------------------------------------------
+	/*----------------------------------------------------------------------------
 	HIDE PRODUCT TYPES
 
 	*	If type wasn't the last changed group, then hide
 		unavailable filters.
 
-	*	Or if you have unchecked everything from the 
+	*	Or if you have unchecked everything from the
 		type group, then hide unavailable filters.
-	--------------------------------------------------*/
+	----------------------------------------------------------------------------*/
 	if($('.filter-type').hasClass('last-selected-group')==false || $('.filter-type input:checked').length==0){
 		$('.filter-type li').hide();
 		$('.filter-type li').each(function(){
@@ -508,18 +511,19 @@ function loadFilterJSON(){
 				}
 			});
 		});
+    hideUnavailableHeaderNav();
 	}
 
 
-	/*--------------------------------------------------
+	/*----------------------------------------------------------------------------
 	HIDE PRODUCT SIZES
 
 	*	If size wasn't the last changed group, then hide
 		unavailable filters.
 
-	*	Or if you have unchecked everything from the 
+	*	Or if you have unchecked everything from the
 		size group, then hide unavailable filters.
-	--------------------------------------------------*/
+	----------------------------------------------------------------------------*/
 	if($('.filter-size').hasClass('last-selected-group')==false || $('.filter-size input:checked').length==0){
 		$('.filter-size li').hide();
 		$('.filter-size li').each(function(){
@@ -530,18 +534,19 @@ function loadFilterJSON(){
 				}
 			});
 		});
+
 	}
 
 
-	/*--------------------------------------------------
+	/*----------------------------------------------------------------------------
 	HIDE THEMES
 
 	*	If theme wasn't the last changed group, then hide
 		unavailable filters.
 
-	*	Or if you have unchecked everything from the 
+	*	Or if you have unchecked everything from the
 		theme group, then hide unavailable filters.
-	--------------------------------------------------*/
+	----------------------------------------------------------------------------*/
 	if($('.filter-theme').hasClass('last-selected-group')==false || $('.filter-theme input:checked').length==0){
 		$('.filter-theme li').hide();
 		$('.filter-theme li').each(function(){
@@ -555,15 +560,15 @@ function loadFilterJSON(){
 	}
 
 
-	/*--------------------------------------------------
+	/*----------------------------------------------------------------------------
 	HIDE PRICES
 
 	*	If prices wasn't the last changed group, then hide
 		unavailable filters.
 
-	*	Or if you have unchecked everything from the 
+	*	Or if you have unchecked everything from the
 		prices group, then hide unavailable filters.
-	--------------------------------------------------*/
+	----------------------------------------------------------------------------*/
 	if($('.filter-price').hasClass('last-selected-group')==false || $('.filter-price input:checked').length==0){
 		$('.filter-price li').hide();
 		$('.filter-price li').each(function(){
@@ -584,16 +589,16 @@ function loadFilterJSON(){
 	}
 
 
-	/*--------------------------------------------------
+	/*----------------------------------------------------------------------------
 	HIDE SHIPPING TIMES
 
-	*	If shipping time wasn't the last changed group, 
+	*	If shipping time wasn't the last changed group,
 		then hide unavailable filters.
 
-	*	Or if you have unchecked everything from the 
-		shipping time group, then hide unavailable 
+	*	Or if you have unchecked everything from the
+		shipping time group, then hide unavailable
 		filters.
-	--------------------------------------------------*/
+	----------------------------------------------------------------------------*/
 	if($('.filter-shipping').hasClass('last-selected-group')==false || $('.filter-shipping input:checked').length==0){
 		$('.filter-shipping li').hide();
 		$('.filter-shipping li').each(function(){
@@ -607,15 +612,15 @@ function loadFilterJSON(){
 	}
 
 
-	/*--------------------------------------------------
+	/*----------------------------------------------------------------------------
 	HIDE BRANDS
 
 	*	If brands wasn't the last changed group, then
 		hide unavailable filters.
 
-	*	Or if you have unchecked everything from the 
+	*	Or if you have unchecked everything from the
 		brands group, then hide unavailable filters.
-	--------------------------------------------------*/
+	----------------------------------------------------------------------------*/
 	if($('.filter-brands').hasClass('last-selected-group')==false || $('.filter-brands input:checked').length==0){
 		$('.filter-brands li').hide();
 		$('.filter-brands li').each(function(){
@@ -628,23 +633,24 @@ function loadFilterJSON(){
 		});
 	}
 
-  
-  	/*--------------------------------------------------
+
+  /*----------------------------------------------------------------------------
 	SHOW ALL FILTERS FOR GROUP IF ONLY VISISIBLE FILTER
-	--------------------------------------------------*/
+	----------------------------------------------------------------------------*/
   	if($('.filter').filter(function(){return $(this).find('input:checked').length>0}).length==1){
       	$('.filter').filter(function(){return $(this).find('input:checked').length>0}).find('li').show();
+        hideUnavailableHeaderNav();
   	}
 
-  
-	/*--------------------------------------------------
+
+	/*----------------------------------------------------------------------------
 	HIDE UNAVAILABLE GROUPS
 
 	*	If group has no visible filters, hide it.
 
-	*	If filter is hidden and checked, remove the 
+	*	If filter is hidden and checked, remove the
 		checked attribute from filter.
-	--------------------------------------------------*/	
+	----------------------------------------------------------------------------*/
 	$('.filter input:hidden:checked').removeAttr('checked');
 	$('.filter').filter(function(){
 		return $(this).find('input:visible').length==0;
@@ -653,8 +659,84 @@ function loadFilterJSON(){
 }
 
 
+/*==============================================================================
+NAVIGATION BAR
+==============================================================================*/
 
 
+  /*----------------------------------------------------------------------------
+  LISTEN FOR SECONDARY NAVIGATION CLICKS
+
+  * When secondary navigation link is clicked, toggle it in the product type
+    section of the sidebar.
+  ----------------------------------------------------------------------------*/
+  $(function(){
+    $(document).on('click', '.collection-menu a', function(event){
+      event.preventDefault();
+      var tag = $(this).attr('href').split('/');
+      tag = 'type-'+tag[tag.length-1].toLowerCase().replace('$','').replace(/ /g,'-').replace(/-&-/g, '-');
+      $('.filter-type input#'+tag).click();
+      $(this).blur();
+    });
+  });
 
 
+  /*----------------------------------------------------------------------------
+  LISTEN FOR SIDEBAR PRODUCT TYPE SELECTION
 
+  * When secondary navigation link is clicked, toggle it in the sidebar
+  ----------------------------------------------------------------------------*/
+  $(function(){
+    $(document).on('change', '.filter-type input', function(){
+      var tag = $(this).attr('id').replace('type-','');
+      var name = $(this).parent().find('label').text();
+      if($(this).is(':checked')){
+        if($('.collection-menu a[data-tag="'+tag+'"]').length==0){
+          $('.third-menu').append('<li><a href="/'+tag+'" data-tag="'+tag+'" class="link-active">'+name+'</a></li>');
+        }
+        $('.collection-menu a[data-tag="'+tag+'"]').addClass('link-active');
+      }
+      else {
+        $('.collection-menu a[data-tag="'+tag+'"]').removeClass('link-active');
+        $('.third-menu').find('a[data-tag="'+tag+'"]').parent().remove();
+      }
+      fixHeaderHeight();
+    });
+  });
+
+
+/*==============================================================================
+FIX HEADER HEIGHT
+
+* Whenever the third menu is activated, get the new height of the header bar
+  and apply that as padding to the page container.
+==============================================================================*/
+function fixHeaderHeight(){
+  var header_height = $('.header-bar').outerHeight();
+  $('#PageContainer').css('padding-top',header_height);
+}
+
+
+/*==============================================================================
+HIDE UNAVAILABLE HEADER NAV
+
+* Whenever the collection renders products, check the available product types.
+  If the product type isn't available in the sidebar, hide it from the
+  secondary nav.
+==============================================================================*/
+function hideUnavailableHeaderNav(){
+  $('.collection-menu a').each(function(){
+    var tag = 'type-'+$(this).attr('data-tag');
+    if($('.filter-type input#'+tag+':visible').length==0){
+      $(this).removeClass('link-active');
+      $(this).parent().hide();
+      if($(this).parents('.third-menu').length>0){
+        $(this).parent().remove();
+      }
+    }
+    else {
+      $(this).parent().show();
+    }
+  });
+  fixHeaderHeight();
+}
