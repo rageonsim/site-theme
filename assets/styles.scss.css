@@ -53,10 +53,12 @@
 	
 	/* MikeS Edits: 08/03/15 */
 	#ProductPhoto,
+	.snize-thumbnail,
 	.indv-product .image {
       position: relative;
     }
 	#ProductPhoto img.ready-to-ship-banner,
+	.snize-thumbnail img.ready-to-ship-banner,
 	.indv-product .image img.ready-to-ship-banner {
       /* putting this here to not edit above code, :not(.ready-to-ship-banner) on 27 would be good */
       -webkit-transition: none; /* Safari and Chrome */
@@ -65,11 +67,18 @@
       -o-transition: none; /* Opera */
       transition: none;
       /* new styles */
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      width: 20%;
+      position: absolute !important;
+      top: 5px !important;
+      left: 5px !important;
+      right: auto !important;
+      bottom: auto !important;
+      width: 20% !important;
+      max-width: 25% !important;
+      max-height: 100% !important;
       height: auto;
+    }
+	.snize-thumbnail img.ready-to-ship-banner {
+      width: 25% !important;
     }
 	/* End MikeS Edits */
 	

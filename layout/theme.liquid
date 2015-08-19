@@ -71,9 +71,30 @@ _atrk_opts = { atrk_acct:"YOPEj1aotV00aW", domain:"rageon.com",dynamic: true};
     <!-- tony edits -->
     {{ 'jquery.rwdImageMaps.min.js' | asset_url | script_tag }}
   <script>
-    $(document).ready(function(e) {
+    jQuery(document).ready(function($) {
         $('img[usemap]').rwdImageMaps();
-
+      	/** MikeS Edits (reuse doc ready) **/
+        var rts_banner_to;
+        var rts_times_fire = 0;
+        (rts_banner = function() {
+          if(rts_times_fire > 10) return (rts_times_fire = 0);
+          rts_banner_to = setTimeout(function() {
+            rts_times_fire++;
+            $rts_images = $("a:contains('Ready to Ship') .snize-item-image");
+            console.log($rts_images.length);
+            if(!!$rts_images.length) {
+              clearTimeout(rts_banner_to);
+              $rts_images.each(function(dex,elem) {
+                  $(elem).after('{{ 'Ready_to_Ship_Icon_thumb.png' | asset_url | img_tag: 'Ready to Ship!', 'ready-to-ship-banner' }}');
+              });
+              rts_times_fire = 0;
+            } else {
+              rts_banner();
+            }
+          },500);
+        }).call(this);
+      	$("input.snize-input-style,input.snize-search-input").on("submit",rts_banner);
+        /** End MikeS Edits ****************/
     });
   </script>
    <!-- tony edits end -->
@@ -351,7 +372,7 @@ window._fbq.push(['track', '6033388608974', {'value':'0.00','currency':'USD'}]);
                 </div>
               </div>
               <div class="grid__item large--one-third testClass">
-                <h4 class="mar-bottom" >Free Shipping On USA Orders Over $75 / $200 Int</h4>
+                <h4 class="mar-bottom" >Free Shipping On All USA Orders Over $75,<br> International Over $200</h4>
                 <h4>Sign Up For Email</h4>
                 <form action="https://docs.google.com/a/rageon.com/forms/d/1SzkaM9dKgRiClIiINFFsjTFWpxJjOvG23Ie_7xvAwSw/formResponse" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
                   <input type="email" placeholder="Enter your email address" value="" name="entry.544868782" id="mail" class="input-group-field" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off">
