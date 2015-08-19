@@ -12,27 +12,23 @@
 .size-chart td, .size-chart th {
 	text-align:center;
 }
-/* shipping */
-  #shipping h1 {
-     display:none;
-
+/* shipping */		
+  #shipping h1 {		
+     display:none;		
+  }		
+  #shipping .rte h1 {		
+        display:block;		
   }
-  #shipping .rte h1 {
-        display:block;
-  }
-
-
-/* product slide show */
+/* product slide show/ zoom effect on hover */
   .indv-product .image a img.second { display: none; }
    .indv-product .image a:hover img.first { display: none; }
    .indv-product .image a:hover img.second { display: block; }
    .indv-product .image  {
-   		overflow-y: hidden;
-        overflow-x: hidden !important;
-   }  
+   		overflow:visible;
+   }
 	.indv-product .image  {
         padding:2%;
-        
+
     }
    .indv-product .image img {
         -webkit-transition: all 2s ease; /* Safari and Chrome */
@@ -40,8 +36,11 @@
         -ms-transition: all 2s ease; /* IE 9 */
         -o-transition: all 2s ease; /* Opera */
         transition: all 2s ease;
-        
+     	position:relative; 
+     	z-index:1;
+
     }
+
 
     .indv-product .image:hover img {
         -webkit-transform:scale(1.1); /* Safari and Chrome */
@@ -50,7 +49,10 @@
         -o-transform:scale(1.1); /* Opera */
          transform:scale(1.1);
     }
-	
+	.indv-product .indv-product-info {
+        position:relative; 
+     	z-index:2;
+    }
 	/* MikeS Edits: 08/03/15 */
 	#ProductPhoto,
 	.snize-thumbnail,
@@ -81,12 +83,12 @@
       width: 25% !important;
     }
 	/* End MikeS Edits */
-	
- 
+
+
 /* a-culture-of-awesomeness */
 #a-culture-of-awesomeness blockquote, #a-culture-of-awesomeness p {
 	margin-bottom: 0px;
-}  
+}
 /* kids page */
 #kids #type-kids ,#kids label[for="type-kids"]  {
 	display:none;
@@ -99,7 +101,7 @@
     position: relative;
     left: -2%;
   	float: left;
-} 
+}
 .col-2-img a ,.col-3-img a  {
 	display: inline-block !important;
 
@@ -111,18 +113,18 @@
 .col-2-img a  {
 	    display: inline-block ;
           width: 49.5%;
-     
+
   	padding: 0 10px 0 10px;
 
-} 
+}
 .col-3-img a  {
 	display: inline-block;
    	width: 33%;
   	padding: 0px 14px 0px 14px;
-} 
+}
 .col-2-img img, .col-3-img img {
   	width: 100%;
-} 
+}
 .img-bars {
 	text-align:center;
 }
@@ -145,14 +147,14 @@
     padding-top: 3px;
 }
 .social-title {
-	  padding-top: 4px;	
+	  padding-top: 4px;
 }
 .slim-footer .chat-box, .slim-footer .shipping-box {
 	padding-top: 4px;
 }
 /* coopt modal/ plugin */
 .coopt-v2-powered-by {
-	display:none !important;	
+	display:none !important;
 }
 .coopt-v2-message {
   font-style: normal !important;
@@ -199,13 +201,13 @@ a.coopt-v2-send, a.coopt-v2-continue {
   display:none !important;
 }
 .coopt-v2-continue {
-	color:#fff !important; 
+	color:#fff !important;
 }
 .coopt-modal, .coopt-wash {
 	display:none !important;
 }
 /* nav */
-a[href="http://snapshirt.com/"] { 
+a[href="http://snapshirt.com/"] {
   	display:none;
   }
 /* slider
@@ -216,7 +218,6 @@ a[href="http://snapshirt.com/"] {
 	visibility :visible ;
 }
  */
-
 @media screen and (max-width: 670px) {
   img {
   	max-width:100%;
@@ -277,13 +278,13 @@ a[href="http://snapshirt.com/"] {
     text-align:left;
   }
   /* side/ main menu  */
-  a[href="/pages/builder"] { 
+  a[href="/pages/builder"] {
   	display:block;
   }
-  a[href="http://snapshirt.com/"] { 
+  a[href="http://snapshirt.com/"] {
       	display:none !important;
   }
-  
+
   /* footer */
   .footer-links ul {
   	margin-bottom: 0px;
@@ -299,7 +300,7 @@ a[href="http://snapshirt.com/"] {
     height: 35px;
     padding-top: 6px;
     font-size: 2.9em;
-  }   
+  }
   /* media page */
 
   .col-2-img a , .col-3-img a  {
@@ -309,19 +310,23 @@ a[href="http://snapshirt.com/"] {
       margin-right:auto;
       padding:0px !important;
 
-  } 
+  }
   .col-2-img , .col-3-img {
   	    left: -3%;
   		width: 107%;
       padding-left:0px;
   }
-  
+
 
 
 }
 @media only screen and (max-width: 480px) {
   .small--one-half {
     width: 49% !important;
+  }
+  .snize-ac-results {
+    left: auto !important;
+    right: 0;
   }
 
 }
@@ -339,8 +344,16 @@ a[href="http://snapshirt.com/"] {
   .customer-menu .account-link, .customer-menu .site-header__cart-toggle, .customer-menu #customer_login_link, .customer-menu .search-bar  {
   	display:none;
   }
-  
+
 }
+
+
+@media screen and (min-width: 769px){
+  .filter-sort-by {
+    display: none!important;
+  }
+}
+
 /* Bold Collection Fixes - July 14 */
 .collection-menu ul.third-menu {
   display: block;

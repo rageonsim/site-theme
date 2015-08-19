@@ -91,8 +91,8 @@
 			<ul>
 			{% for product_vendor in shop.vendors %}
 			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
-				{% if brand-letter == "E" %}
-					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% if (brand-letter == "E" or brand-letter == 'EBAE') %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }} {{ 'ebae' | truncate: 4 | upcase | remove:"..." }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
 				{% endif %}
 			{% endfor %}
 			</ul>

@@ -36,7 +36,7 @@
     <div class="indv-product-info">
       <h4 class="h5">{{ product.title }}</h4>
       <h6>{{ product.vendor }}</h6>
-      <p>{{ product.price | money_with_currency }}<span class="compare-price">{{ product.compare_at_price_max | money_with_currency }}</span></p>
+      <p>{{ product.price | money_with_currency }}<span class="compare-price {{ product.compare_at_price_max  }}" {% if product.compare_at_price_max  == 0 %} style="display:none"  {% endif %}  >{{ product.compare_at_price_max | money_with_currency }}</span></p>
     </div>
   </a>
 </div>
