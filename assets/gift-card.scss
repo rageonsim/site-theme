@@ -13,12 +13,12 @@
   #General Variables
 ==============================================================================*/
 // Timber Colors
-$colorBody: {{ settings.color_body_bg }};
-$colorBorder: {{ settings.color_borders }};
+$colorBody: #fff;
+$colorBorder: #e5e5e5;
 
 // Gift Card Colors
 $colorGiftText: #999; // note, this is always on a white background
-$colorGiftBorder: {{ settings.color_primary }};
+$colorGiftBorder: #000000;
 
 // Sizes
 $gutter: 30px;
