@@ -1,0 +1,5 @@
+{% capture output %}{{ product.vendor }}
+{% for tag in product.tags %}{% if tag contains 'Fabric-' %}.{{ tag | remove: 'Fabric-' }}{% endif %}{% endfor %}
+{% for tag in product.tags %}{% if tag contains 'Style-' %}.{{ tag | remove: 'Style-' }}{% endif %}{% endfor %}
+{% for tag in product.tags %}{% if tag contains 'Size-' %}.{{ tag | remove: 'Size-' }}{% endif %}{% endfor %}
+{% endcapture %}{{ output | strip_newlines | strip | remove_first: ',' | replace: '.', ' ' | downcase }}

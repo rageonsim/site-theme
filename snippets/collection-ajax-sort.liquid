@@ -1,0 +1,253 @@
+<script>
+
+/*TABLE OF CONTENTS=================================
+
+  1.  LOAD COLLECTION
+  2.  RELOAD COLLECTION
+  3.  GET COLLECTION PRODUCTS
+  4.  GENERATE COLLECTION PAGE
+    4a. SORT PRODUCTS BY PRICE
+    4b. OUTPUT SORTED PRODUCTS
+    4c. APPLY ACTIVE FILTERS TO COLLECTION
+    4d. INIT BLOCKSIT ON CURRENT PRODUCTS
+
+  5.  LISTEN FOR FILTER CHANGE
+  6.  GET ACTIVE FILTERS
+  7.  BLOCKSIT RESIZE
+
+==================================================*/
+
+
+
+/*==================================================
+0.  GLOBAL VARIABLES
+==================================================*/
+var active_filters = [];
+var active_brands = [];
+var active_fabrics = [];
+var active_styles = [];
+var active_prices = [];
+var active_sizes = [];
+var collection_data = [];
+var string_data = '';
+var pages = '{{ paginate.pages }}'*1;
+var collection_url = '{{ collection.url }}';
+
+
+
+/*==================================================
+1.  LOAD COLLECTION
+==================================================*/
+$(function(){
+  reloadCollection();
+});
+
+
+
+/*==================================================
+2.  RELOAD COLLECTION
+==================================================*/
+function reloadCollection(){
+  $('#container').html('<span class="loader"><i class="fa fa-spinner fa-spin"></i></span>');
+  getCollectionProducts();
+}
+
+
+
+/*==================================================
+3.  GET COLLECTION PRODUCTS
+==================================================*/
+function getCollectionProducts(){
+  var loaded_pages = 0;
+  collection_data = [];
+  string_data = '';
+
+  for( var i=0; i<pages; i++){
+    $.ajax({
+      type: 'GET',
+      url: collection_url,
+      dataType: 'html',
+      data: {
+        view: 'sortable',
+        page: i+1
+      },
+      async: true,
+      success: function(data){
+        loaded_pages++;
+        collection_data.push(data);
+        string_data += data;
+        if(loaded_pages==pages){
+          generatePage();
+        }
+      }
+    });
+  }
+}
+
+
+
+/*==================================================
+4.  GENERATE COLLECTION PAGE
+==================================================*/
+function generatePage(){
+
+  /* 4a.  SORT PRODUCTS BY PRICE */
+  var new_string = $(string_data).sort(function (a, b) {
+      var contentA =parseInt( $(a).attr('data-price'));
+    var contentB =parseInt( $(b).attr('data-price'));
+    return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+    })
+
+  /* 4b.  OUTPUT SORTED PRODUCTS */
+  $('#container').html(new_string).hide();
+
+  /* 4c.  APPLY ACTIVE FILTERS TO COLLECTION */
+  if(active_filters.length>0){
+
+    $(''+active_brands+'').addClass('branded');
+    $(''+active_fabrics+'').addClass('fabriced');
+    $(''+active_styles+'').addClass('styled');
+    $(''+active_sizes+'').addClass('sized');
+
+    if(active_brands.length==0){
+      $('.grid-blocksit').addClass('branded');
+    }
+
+    if(active_fabrics.length==0){
+      $('.grid-blocksit').addClass('fabriced');
+    }
+
+    if(active_styles.length==0){
+      $('.grid-blocksit').addClass('styled');
+    }
+
+    if(active_sizes.length==0){
+      $('.grid-blocksit').addClass('sized');
+    }
+
+    $('.grid-blocksit:not(.branded.fabriced.styled.sized)').remove();
+  }
+
+  $('.grid-blocksit').filter(function() {
+      return  parseInt($(this).attr("data-price")) < active_prices[0];
+  }).remove();
+
+  $('.grid-blocksit').filter(function() {
+      return  parseInt($(this).attr("data-price")) > active_prices[1];
+  }).remove();
+
+
+
+  /* 4d.  INIT BLOCKSIT ON CURRENT PRODUCTS */
+  setTimeout(function(){
+    $('#container').show();
+    $('#container').BlocksIt({
+          numOfCol: 3,
+          offsetX: 8,
+          offsetY: 8
+      });
+      blocksitResize();
+    }, 100);
+}
+
+
+
+/*==================================================
+5.  LISTEN FOR FILTER CHANGE
+==================================================*/
+$('.apply-filter').click(function(event){
+  event.preventDefault();
+  getActiveFilters();
+  reloadCollection();
+});
+
+
+
+/*==================================================
+6.  GET ACTIVE FILTERS
+==================================================*/
+function getActiveFilters(){
+  active_filters = [];
+  active_brands = [];
+  active_fabrics = [];
+  active_styles = [];
+  active_prices = [];
+  active_sizes = [];
+
+
+  /* GET ALL ACTIVE PRICES */
+  active_prices = $('#slider-price').val();
+
+  /* GET ALL ACTIVE FILTERS */
+  $('.filter:checked').each(function(){
+    active_filters.push('.'+$(this).attr('id').toLowerCase());
+  });
+
+  /* GET ALL ACTIVE BRANDS */
+  $('.filter[name="brands"]:checked').each(function(){
+    active_brands.push('.'+$(this).attr('id').toLowerCase());
+  });
+
+  /* GET ALL ACTIVE FABRICS */
+  $('.filter[name="fabric"]:checked').each(function(){
+    active_fabrics.push('.'+$(this).attr('id').toLowerCase());
+  });
+
+  /* GET ALL ACTIVE STYLES */
+  $('.filter[name="style"]:checked').each(function(){
+    active_styles.push('.'+$(this).attr('id').toLowerCase());
+  });
+
+  /* GET ALL ACTIVE SIZES */
+  $('.filter[name="size"]:checked').each(function(){
+    active_sizes.push('.'+$(this).attr('id').toLowerCase());
+  });
+}
+
+
+
+/*==================================================
+7.  BLOCKSIT RESIZE
+==================================================*/
+var currentWidth = 840;
+$(window).resize(function() {blocksitResize()});
+function blocksitResize () {
+    var winWidth = $(window).width();
+    var conWidth;
+    if(winWidth <= 320) {
+        conWidth = 280;
+        col = 1
+    } else if(winWidth < 480) {
+            conWidth = 360;
+            col = 1
+    } else if(winWidth < 660) {
+        conWidth = 440;
+        col = 2
+    } else if(winWidth < 769) {
+        conWidth = 738;
+        col = 3;
+    } else if(winWidth < 840) {
+        conWidth = 640;
+        col = 3;
+    } else if(winWidth < 1140) {
+        conWidth = 800;
+        col = 3;
+    } else {
+        conWidth = 840;
+        col = 3;
+    }
+    
+    if(conWidth != currentWidth) {
+        currentWidth = conWidth;
+        $('#container').width(conWidth);
+        $('#container').BlocksIt({
+            numOfCol: col,
+            offsetX: 8,
+            offsetY: 8
+        });
+    }
+}
+
+</script>
+
+

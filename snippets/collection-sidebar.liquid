@@ -1,0 +1,248 @@
+<input type="hidden" name="collection_url" id="collection_url" value="{{ collections[collection.handle].url }}">
+<input type="hidden" name="pagination_pages" id="pagination_pages" value="{{ paginate.pages }}">
+
+{{ 'collection-ajax.js' | asset_url | script_tag }}
+<div class="sidebar-filters">
+
+  <h4>Refine By</h4>
+
+	{% assign has_type = false %}
+  
+  	{% for tag in current_tags %}
+  		{% for type in collection.all_types %}
+  			{% if tag == type %}
+  				{% assign has_type = true %}
+  			{% endif %}
+  		{% endfor %}
+  	{% endfor %}
+  
+  {% if has_type == false %}
+  {% if collection.all_types.size > 1 %}
+  <div class="filter filter-type open">
+    <div class="filter-title">
+      <i class="fa fa-chevron-down"></i>
+      <h5>Product Type</h5>
+    </div>
+
+    <div class="filter-list">
+      <ul class="advanced-filters">
+        
+      {% for product_type in collection.all_types %}
+        {% if product_type contains "&" %}
+        {% else %}
+        <li class="checkbox advanced-filter"><input value="type-{{ product_type | handleize | downcase }}" type="checkbox" id="type-{{ product_type | handleize }}"><label for="type-{{ product_type | handleize }}">{{ product_type }}</label></li>
+        {% endif %}
+      {% endfor %}
+
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+  {% endif %}
+
+  
+  <div class="filter filter-size open">
+    <div class="filter-title">
+      <i class="fa fa-chevron-down"></i>
+      <h5>Size</h5>
+    </div>
+    <div class="filter-list">
+      <ul>
+        {% for tag in collection.tags %}
+        	{% if tag contains 'size-' %}
+                {% assign tag_found = tag | remove: 'size-' %}
+                {% if tag_found != '' %}
+                  <li class="checkbox advanced-filter"><input value="{{ tag | handleize }}" type="checkbox" id="{{ tag | handleize }}"><label for="{{ tag | handleize }}">{{ tag | remove: 'size-' }}</label></li>
+        		{% endif %}
+        	{% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="filter filter-theme open">
+    <div class="filter-title">
+      <i class="fa fa-chevron-down"></i>
+      <h5>Theme</h5>
+    </div>
+    <div class="filter-list">
+      <ul>
+      {% for tag in collection.all_tags %}
+        {% if tag contains 'theme-' %}
+          <li class="checkbox advanced-filter"><input value="{{ tag }}" type="checkbox" id="{{ tag | handleize }}"><label for="{{ tag | handleize }}">{{ tag | remove: 'theme-' | capitalize }}</label></li>
+        {% endif %}
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="filter filter-price closed">
+    <div class="filter-title">
+      <i class="fa fa-chevron-down"></i>
+      <h5>Price</h5>
+    </div>
+    <div class="filter-list">
+      <ul>
+        {% for link in linklists.filter-price.links %}
+          <li class="checkbox advanced-filter"><input value="{{ link.url | remove: "http://" | remove: "https://" }}" type="checkbox" id="{{ link.title | handleize }}"><label for="{{ link.title | handleize }}">{{ link.title }}</label></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="filter filter-shipping closed">
+    <div class="filter-title">
+      <i class="fa fa-chevron-down"></i>
+      <h5>Shipping Time</h5>
+    </div>
+    <div class="filter-list">
+      <ul>
+        {% for link in linklists.filter-shipping-times.links %}
+          <li class="checkbox advanced-filter"><input value="{{ link.url | remove: "http://" | remove: "https://" }}" type="checkbox" id="{{ link.title | handleize }}"><label for="{{ link.title | handleize }}">{{ link.title }}</label></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  {% for product_vendor in collection.all_vendors %}
+  	{% assign brandCount = forloop.index %}
+  {% endfor %}
+ 
+  {% if brandCount == 1 %}
+  
+  {% else %}
+	<div class="filter filter-brands closed">
+      <div class="filter-title">
+        <i class="fa fa-chevron-down"></i>
+        <h5>Brands</h5>
+      </div>
+      <div class="filter-list">
+        <ul>
+          {% for product_vendor in collection.all_vendors %}
+          <li class="checkbox"><input type="checkbox" id="{{ product_vendor }}" value="vendor-{{ product_vendor | handleize }}"><label for="{{ product_vendor }}">{{ product_vendor }}</label></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="filter filter-sort-by closed">
+    <div class="filter-title">
+      <i class="fa fa-chevron-down"></i>
+      <h5>Sort By</h5>
+    </div>
+    <div class="filter-list">
+      <ul>
+        <li class="checkbox"><input type="checkbox" value="?sort_by=manual" id="{{ 'collections.sorting.featured' | t | handelize }}"><label for="{{ 'collections.sorting.featured' | t | handelize }}">{{ 'collections.sorting.featured' | t }}</label></li>
+        <li class="checkbox"><input type="checkbox" value="?sort_by=best-selling" id="{{ 'collections.sorting.best_selling' | t | handelize }}"><label for="{{ 'collections.sorting.best_selling' | t | handelize }}">{{ 'collections.sorting.best_selling' | t }}</label></li>
+        <li class="checkbox"><input type="checkbox" value="?sort_by=title-ascending" id="{{ 'collections.sorting.az' | t | handelize }}"><label for="{{ 'collections.sorting.az' | t | handelize }}">{{ 'collections.sorting.az' | t }}</label></li>
+        <li class="checkbox"><input type="checkbox" value="?sort_by=title-descending" id="{{ 'collections.sorting.za' | t | handelize }}"><label for="{{ 'collections.sorting.za' | t | handelize }}">{{ 'collections.sorting.za' | t }}</label></li>
+        <li class="checkbox"><input type="checkbox" value="?sort_by=price-ascending" id="{{ 'collections.sorting.price_ascending' | t | handelize }}"><label for="{{ 'collections.sorting.price_ascending' | t | handelize }}">{{ 'collections.sorting.price_ascending' | t }}</label></li>
+        <li class="checkbox"><input type="checkbox" value="?sort_by=price-descending" id="{{ 'collections.sorting.price_descending' | t | handelize }}"><label for="{{ 'collections.sorting.price_descending' | t | handelize }}">{{ 'collections.sorting.price_descending' | t }}</label></li>
+        <li class="checkbox"><input type="checkbox" value="?sort_by=date-ascending" id="{{ 'collections.sorting.date_ascending' | t | handelize }}"><label for="{{ 'collections.sorting.date_ascending' | t | handelize }}">{{ 'collections.sorting.date_ascending' | t }}</label></li>
+        <li class="checkbox"><input type="checkbox" value="?sort_by=date-descending" id="{{ 'collections.sorting.date_descending' | t | handelize }}"><label for="{{ 'collections.sorting.date_descending' | t | handelize }}">{{ 'collections.sorting.date_descending' | t }}</label></li>
+        {% comment %}
+        <li class="checkbox"><input type="checkbox" value="?view=size-24" id="show-24"><label for="show-24">Show 24 Products</label></li>
+        <li class="checkbox"><input type="checkbox" value="?view=size-48" id="show-48"><label for="show-48">Show 48 Products</label></li>
+        <li class="checkbox"><input type="checkbox" value="?view=size-72" id="show-72"><label for="show-72">Show 72 Products</label></li>
+        <li class="checkbox"><input type="checkbox" value="?view=size-96" id="show-96"><label for="show-96">Show 96 Products</label></li>
+        {% endcomment %}
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+  
+  // Apply sticky when the products are loaded, so the sticky parent has the accurate height 
+  // (don't load sticky on mobile)
+  
+  $(document).ready(function(){
+    
+    var headerHeightOffest = $('.header-bar').outerHeight() +10;
+    
+    
+    // wait until products are loaded before setting the sidebar height as well as making the sidebar sticky
+    
+    setTimeout(function(){  
+
+      
+      if ($(window).width() < 768) {
+        
+        //don't make it sticky
+      
+      } else {
+        var containterHeight = $('.collection-container').outerHeight();
+      	$(".pos-rel").css('height', containterHeight);
+
+        
+        $(".sidebar-filters").stick_in_parent({
+          offset_top: headerHeightOffest,
+          parent: ".pos-rel",
+          inner_scrolling: true
+        });
+      }
+
+    }, 2000);
+
+  });
+  
+  
+  //when you click on a title, make it open and close, also recalc height of sticky sidebar
+  //also make sure collection containers size is larger than sticky sidebar to prevent issues
+
+  $('.filter-title').click(function(){
+    $(this).parent().toggleClass('open');
+    $(this).parent().toggleClass('closed');
+    
+    var sidebarSize = $('.sidebar-filters').outerHeight();
+    $('.collection-container').css('min-height', sidebarSize);
+    
+    $(".sidebar-filters").trigger("sticky_kit:recalc");
+
+  });
+  
+  
+  // update the height of the sticky container on filter change
+  
+  $('.filter-list input[type=checkbox]').change(function (e) {
+    
+     setTimeout(function(){  
+       
+       $(".sidebar-filters").trigger("sticky_kit:recalc");
+        
+     }, 1250);
+
+
+  });
+  
+  //if bigger than 767, resize collection based on scrolling
+  
+  if ($(window).width() > 767) {
+    $(window).scroll(function() {
+      var containterHeight = $('.collection-container').outerHeight();
+      $(".pos-rel").css('height', containterHeight);
+    });
+  } else {
+  	//do not do this
+  }
+
+  
+  // only one filter can be checked in the sort by filter group
+  
+  $('.filter-sort-by input[type=checkbox]').change(function (e) {
+
+      if($(this).prop('checked')==false){
+        $(this).parents(".filter").find('input:checked').prop('checked', false);
+      }
+      else {
+        $(this).parents(".filter").find('input:checked').prop('checked', false);
+        $(this).prop('checked', true);
+      } 
+  });
+
+</script>
+
+

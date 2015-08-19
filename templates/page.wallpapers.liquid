@@ -1,0 +1,18 @@
+<!-- /templates/page.wallpapers.liquid -->
+<div class="grid featured-wallpaper">
+	<img class="grid__item one-whole wallpaper-banner" alt="Wallpapers Banner" src="{{ "wallpaper-banner.jpg" | asset_url }}"/>
+	{% for i in (1..12) %}
+	  {% capture show_wallpaper %}use_wallpaper_{{ i }}{% endcapture %}
+	  {% capture wallpaper_image %}wallpaper-{{ i }}.jpg{% endcapture %}
+	  {% capture wallpaper_link %}wallpaper_{{ i }}_link{% endcapture %}
+	  {% capture wallpaper_sort %}wallpaper_{{ i }}_order{% endcapture %}
+
+	  {% if settings[show_wallpaper] %}
+	  	<a class="grid__item one-third medium--one-half small--one-half" data-sort-order="{{ settings[wallpaper_sort] }}" href="{{ settings[wallpaper_link] }}" target="_blank"><img  src="{{ wallpaper_image | asset_url }}"></a>
+	  {% endif %}
+	{% endfor %}
+</div>
+
+<div class="rte">
+	{{ page.content }}
+</div>

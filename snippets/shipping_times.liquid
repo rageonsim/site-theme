@@ -1,0 +1,8 @@
+{% capture output %}
+{% for tag in product.tags %}
+{% if tag contains 'shipping-' %}
+,{{ tag }}
+{% endif %}
+{% endfor %}
+{% endcapture %}
+{{ output | remove_first: ',' }}

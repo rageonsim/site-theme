@@ -1,0 +1,395 @@
+<!-- /templates/product.liquid -->
+{% comment %}
+
+  Rich snippets (itemscope, itemtype, etc.) for products are a theme requirement,
+  and allow search engines to easily understand what the content is.
+
+  For more information on these Scheme.org tags, visit:
+    - http://schema.org/docs/gs.html
+
+{% endcomment %}
+
+<div itemscope itemtype="http://schema.org/Product">
+
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+
+  {% comment %}
+    Get first variant, or deep linked one
+  {% endcomment %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+
+  <div class="grid product-single">
+    <div class="grid__item large--three-fifths text-center">
+      <div class="product-single__photos" id="ProductPhoto">
+        {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+        <img src="{{ featured_image | img_url: '1024x1024' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
+        {% comment %}
+        	Add "Ready to Ship" banner
+        {% endcomment %}
+        {% if product.tags contains "Ready to Ship" %}
+          {{ 'Ready_to_Ship_Icon_thumb.png' | asset_url | img_tag: 'Ready to Ship!', 'ready-to-ship-banner' }}
+        {% endif %}
+      </div>
+      
+      
+
+      {% comment %}
+        Create thumbnails if we have more than one product image
+      {% endcomment %}
+
+      {% if product.images.size > 1 %}
+        <ul class="product-single__thumbnails grid-uniform" id="ProductThumbs">
+
+          {% for image in product.images %}
+            <li class="grid__item one-quarter">
+              <a href="{{ image.src | img_url: '1024x1024' }}" data-zoom-image="{{ image.src | img_url: 'master' }}" class="product-single__thumbnail">
+                <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+              </a>
+            </li>
+          {% endfor %}
+
+        </ul>
+      {% endif %}
+      
+    </div>
+
+    <div class="grid__item large--two-fifths">
+
+      <h1 itemprop="name">{{ product.title }}</h1>
+
+      <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+
+        <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+        <span id="ProductPrice" class="h2" itemprop="price">{{ current_variant.price | money_with_currency }}</span>
+        <span id="ComparePrice" class="h2">{{ current_variant.compare_at_price | money_with_currency }}</span>
+
+
+        <div class="clearfix"></div>
+
+
+        <p class="product-vendor">By: <a href="{{shop.url}}/collections/{{product.vendor | handleize }}" class="underline">{{ product.vendor }}</a></p>
+
+        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-vertical">
+
+          {% comment %}
+            Add product variants as a dropdown.
+              - By default, each variant (or combination of variants) will display as its own <option>
+              - To separate these into multiple steps, which we suggest, use option_selection.js (see below)
+
+            You can leverage jQuery to add a callback on page load and each time the select element changes:
+              - Include option_selection.js (as seen at the bottom of this file)
+              - This allows you to use JavaScript anytime the variant dropdown changes
+              - This also separates out your variant options (ie. size, color, etc.) to separate select elements
+
+            For more information on products with multiple options, visit:
+              - http://docs.shopify.com/support/your-website/themes/can-i-make-my-theme-use-products-with-multiple-options#update-product-liquid
+          {% endcomment %}
+
+          <select name="id" id="productSelect" class="product-single__variants">
+            {% for variant in product.variants %}
+            	{% assign optionCount = forloop.index %}
+              {% if variant.available  %}
+
+                {% comment %}
+                  Note: if you use option_selection.js, your <select> tag will be overwritten, meaning what you have inside <option> will not reflect what you coded below.
+                {% endcomment %}
+                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+
+              {% else %}
+                <option disabled="disabled">
+                  {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                </option>
+              {% endif %}
+            {% endfor %}
+          </select>
+
+          
+          <div class="quantity-select-wrapper">
+            <label for="Quantity" class="quantity-selector">{{ 'products.product.quantity' | t }}</label>
+            <!--<input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">-->
+
+            <select name="quantity" id="Quantity" class="quantity-selector quantity-drop">
+              {% for i in (1..10) %}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="clearfix"></div>
+
+
+          <button type="submit" name="add" id="AddToCart" class="btn">
+            <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+          </button>
+        </form>
+
+      </div>
+      <div class="product-social">
+
+        <div class="fb-like" data-href="http://www.rageon.com{{ product.url }}" data-layout="standard" data-action="like" data-colorscheme="light" data-show-faces="true" data-share="false"></div>
+
+        <h4>Share With Friends</h4>
+
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+
+        <div class="addthis_sharing_toolbox">
+          <a class="at-svc-polyvore" href="http://www.polyvore.com" name="addToPolyvore" id="addToPolyvore" data-product-url="rageon.com{{ product.url }}" data-image-url="http:{{ product.featured_image | product_img_url: "1024x1024" }}" data-name="{{ product.vendor }} {{ product.title }} exclusively from RageOn!" data-price="{{ product.price | money | add: ".00"}}"/></a>
+        </div>
+        
+      </div>
+
+<div id="tab-container">
+  <ul class="tabs">
+    <li class="active" data-index="0">About</li>
+    <li data-index="1" class="">Specs</li>
+    <li data-index="2">Sizing (inches)</li>
+  </ul>
+  <div class="clearfix"></div>
+      <ul class="tab-content">
+        <li class="active" data-index="0">
+          {% if product.tags contains 'PreOrdered' %}
+          <p>This product is made-to-order. This may be purchased today, but will be shipped from our facility within <b>25 days</b>.</p>
+          {% endif %}
+      
+          {% if product.tags contains 'Apartment' %}
+          <p>This product is made-to-order. This may be purchased today, but will be shipped from our facility within <b>20 days</b>. If combined with other, non-apartment products, your packages will ship separately.
+          <br><br>All apartment products are proudly made in the USA, and will ship SEPARATELY from other products.</p>
+          {% endif %}      
+    
+          {% if product.tags contains 'Disclaimer' %}
+            <p>Estimated time of arrival is <b>10 business days + shipping time</b>, unless coupled with products that have a longer stated production time.</p>
+          {% endif %}
+
+          {% if product.tags contains 'Ready to Ship' %}
+            <p>"Ready To Ship" items will ship within <b>1-3 business days</b>, unless ordered with non-Ready to Ship items!</p>
+          {% endif %}
+
+          {% if product.tags contains 'Onesie' %}
+             <p>Onesies run small, so go big! :)</p>
+          {% endif %}
+
+          {% if product.tags contains 'Socks' %}
+            <p>Any orders containing only socks will ship within <b>10-14 business days</b>. Orders containing socks and other items will ship together!</p>
+          {% endif %}
+          
+          {% if product.tags contains 'shipping-15-days' %}
+            <p>Estimated time of arrival is <b>15 business days + shipping time</b>, unless coupled with products that have a longer stated production time.</p>
+          {% endif %}
+          
+          {% if product.tags contains 'shipping-21-days' %}
+            <p>Estimated time of arrival is <b>21 business days + shipping time</b>, unless coupled with products that have a longer stated production time.</p>
+          {% endif %}
+          
+          {% if product.tags contains 'shipping-26-days' %}
+            <p>Estimated time of arrival is <b>26 business days + shipping time</b>, unless coupled with products that have a longer stated production time.</p>
+          {% endif %}
+          
+          {% if product.tags contains 'shipping-38-days' %}
+            <p>Estimated time of arrival is <b>38 business days + shipping time</b>, unless coupled with products that have a longer stated production time.</p>
+          {% endif %}
+          
+          {% if product.tags contains 'shipping-40-days' %}
+            <p>Estimated time of arrival is <b>40 business days + shipping time</b>, unless coupled with products that have a longer stated production time.</p>
+          {% endif %}
+          
+          {% if product.tags contains 'shipping-60-days' %}
+            <p>Estimated time of arrival is <b>60 business days + shipping time</b>, unless coupled with products that have a longer stated production time.</p>
+          {% endif %}
+          
+          {% if product.tags contains 'shipping-23-days' %}
+            <p>Estimated time of arrival is <b>23 business days + shipping time</b>, unless coupled with products that have a longer stated production time.</p>
+          {% endif %}
+          
+          
+
+          {{ product.description }}
+        </li>
+
+        <li data-index="1" class="">
+          {% if product.tags contains 'Disclaimer' %}
+            <p>This All Over Print design is made with high-quality, 100% spun polyester that delivers the look and feel of organic cotton without ever cracking, peeling or flaking. The back of each design is the same as the front, so passerbys will be able to accurately double take your awesome shirt and confirm their jealousy of you. It stays wrinkle free and soft to the hand forever, able to withstand summer festivals, late nights and world domination with style and grace.</p>
+            <p>We print our shirts using dye-sublimation, a technology that allows for us to produce these insanely vibrant all over designs. Due to this process, the product may contain smudges or irregularities along the seams or under the armpit of the sleeves. We cannot accept returns for this reason. Each item is a unique, 1 of-a-kind product, printed exclusively for the customer who ordered it.</p>
+          {% endif %}
+
+          {% if product.tags contains 'Kerli' %}
+            <p>Winner of multiple Estonian Music Awards for Music Video of the Year, incredible EDM artist, Kerli, has found her home with Rage On!</p>
+          {% endif %}
+
+          {% if product.tags contains 'PreOrdered' %}
+            <p>These garments are made from a 100% specially spun polyester, with each design being made-to-order. Due to each of these products being cut and sewn specifically for you, there may be discrepancies in the design. Our team works extremely hard to get the design to be laid out exactly as seen in the photo, however, there may be design overlapping on the seams and / or arms!</p>
+          {% endif %}
+
+          {% if product.type contains 'Ready to Ship' %}
+            <p>If you want your product now, then this is for you. Our Ready to Ship products are readily available and will ship within 1-3 days unless combined with product that is not in the *Ready to Ship* category.</p>
+            <p>These All Over Print designs are made with high-quality, 100% spun polyester that delivers the look and feel of organic cotton without ever cracking, peeling or flaking. The back of each design is the same as the front, so passerbys will be able to accurately double take your awesome product and confirm their jealousy of you. It stays wrinkle free and soft to the hand forever, able to withstand summer festivals, late nights and world domination with style and grace.</p>
+            <p>We print our shirts using dye-sublimation, a technology that allows for us to produce these insanely vibrant all over designs. Due to this process, the product may contain smudges or irregularities along the seams or under the armpit of the sleeves. We cannot accept returns for this reason. Each shirt is a unique, 1 of-a-kind product, printed exclusively for the customer who ordered it.</p>
+          {% endif %}
+          
+          {% if product.tags contains 'Let&#39;s Rage' %}
+            <!-- Segment Pixel - MA - RageOn - Site - DO NOT MODIFY -->
+            <img src="http://ib.adnxs.com/seg?add=2371728&t=2" width="1" height="1" />
+            <!-- End of Segment Pixel -->
+          {% endif %}
+          
+          {% if product.type contains 'Stickers' %}
+            <p>Made in the USA!</p>
+          {% endif %}
+
+          {% if product.tags contains 'Shower Curtains' %}
+            <p>Dimensions: 69" x 70"</p>
+          {% endif %}
+        </li>
+        
+        <li data-index="2" class="sizing-chart-tab">
+          
+          {% for tag in product.tags %}
+          	{% if tag contains "sizing-chart" %}
+          		{% assign sizingChart = tag %}
+          	{% endif %}
+          {% endfor %}
+          
+          {{ pages[sizingChart].content }}
+          
+        </li>
+      </ul>
+  </div>
+      
+
+
+
+    </div>
+  </div>
+  <div class="related-products">
+
+    {% include 'related-products' %}
+    
+    
+    {% comment %}
+      <!-- Begin related product -->
+		{% include 'linkcious' %}
+  	  <!-- Begin InstaIntegration -->
+    {% endcomment %}
+    
+  </div>
+
+{% comment %}
+  To take advantage of a callback on the select dropdown, add option_selection.js
+  and customize the JS in timber.productPage as needed.
+
+  Currently, timber.productPage does the following:
+    - Hides your <select> tag from above
+    - Breaks out the product variants into separate product options, if more than one exists
+    - Generates a <select> tag for each product option
+    - Enables/disables elements based on variant availability
+
+  Callback notes:
+    - Keep the callback available to the global scope (window.selectCallback) so that advanced
+      addons can override it.
+      * E.g. multiple currencies http://docs.shopify.com/manual/configuration/store-customization/currencies-and-translations/currencies/how-to-toggle-between-two-currencies
+{% endcomment %}
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+  
+<script>
+  var selectCallback = function(variant, selector) {
+    timber.productPage({
+      money_format: "{{ shop.money_with_currency_format }}",
+      variant: variant,
+      selector: selector
+    });
+    convertCurrency() ;
+  };
+
+  jQuery(function($) {
+
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+    
+
+
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 %}
+      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('.selector-wrapper').hide();
+    {% endif %}
+    
+    
+    // Hide any of the variant selectors if they only have one option
+
+    $('.selector-wrapper label').each(function(){
+      if($(this).parents('.selector-wrapper').find('.single-option-selector option').length==1){
+        $(this).parents('.selector-wrapper').hide();
+      }
+    });
+    
+    
+    //on page load, update currency
+    convertCurrency() ;
+
+    // When variant changes, update the currency for it's price 
+    $('.selector-wrapper select').change(function() {
+      $(this).blur(); 
+      convertCurrency();
+    });
+
+  });
+  
+
+  /*==================================================
+  // Product zoom // if mobile, destroy
+  ==================================================*/
+
+  $(function(){
+
+    var windowWidth = $(window).width();
+
+    if (windowWidth < 768) {
+
+    } else {
+	  /*
+      $('#ProductPhoto').zoom({
+          url: "{{ featured_image | img_url: 'master' }}",
+          on: "mouseover"
+      });
+      $('.product-single__thumbnail').click(function(){
+          var zoom_image = $(this).attr('data-zoom-image');
+          var product_photo_width = $('#ProductPhoto').width();
+          var zoom_image_object = new Image();
+          zoom_image_object.src = zoom_image;
+          zoom_image_object.onload = function(){
+              $('#ProductPhoto').trigger('zoom.destroy');
+              if(product_photo_width < zoom_image_object.width){
+                  $('#ProductPhoto').zoom({
+                      url: zoom_image,
+                      on: "mouseover"
+                  });
+              }
+          }
+      });
+      */
+
+    }
+    //update currency
+    convertCurrency() ;
+
+    
+  });
+  
+
+</script>
+
+
+{% if product.tags contains '18+' %}
+            {% include '18plus' %}
+          {% endif %}

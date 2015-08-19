@@ -1,0 +1,49 @@
+<!-- /templates/page.brands.liquid -->
+<div class="grid">
+  	<div class="brand-spotlight">
+		{% for i in (1..16) %}
+			{% capture show_brand %}use_brand_{{ i }}{% endcapture %}
+		  	{% capture brand_image %}brand-{{ i }}.jpg{% endcapture %}
+		  	{% capture brand_link %}brand_{{ i }}_link{% endcapture %}
+		  	{% capture brand_sort %}brand_{{ i }}_order{% endcapture %}
+		  	{% capture brand_write_up %}brand_{{ i }}_write_up{% endcapture %}
+
+		  	{% if settings[show_brand] %}
+				<div class="indv-brand-spotlight">
+				 	<div class="grid__item large--one-half small--one-whole">
+                      <a href="{{ settings[brand_link] }}">
+			  			<img src="{{ brand_image | asset_url }}">
+                      </a>
+					</div>
+			  		<div class="grid__item large--one-half small--one-whole">
+			  			<h2>Brand Spotlight!</h2>
+			  			<p>{{ settings[brand_write_up] }}</p>
+			  			<a class="shop-now-btn btn" href="{{ settings[brand_link] }}">Shop Now</a>
+			  		</div>
+			  	</div>
+		  	{% endif %}
+		{% endfor %}
+  	</div>
+</div>
+<div class="grid featured-brands">
+	<h2 class="grid__item one-whole">{{ page.title }}</h2>
+	{% for i in (1..12) %}
+	  {% capture show_brand %}use_brand_{{ i }}{% endcapture %}
+	  {% capture brand_image %}brand-{{ i }}.jpg{% endcapture %}
+	  {% capture brand_link %}brand_{{ i }}_link{% endcapture %}
+	  {% capture brand_sort %}brand_{{ i }}_order{% endcapture %}
+
+	  {% if settings[show_brand] %}
+	  	<a class="grid__item one-third medium--one-half small--one-half" data-sort-order="{{ settings[brand_sort] }}" href="{{ settings[brand_link] }}"><img src="{{ brand_image | asset_url }}"></a>
+	  {% endif %}
+	{% endfor %}
+</div>
+
+<div class="grid brand-list">
+  <h2 class="grid__item one-whole">All Brands</h2>
+	{% include 'brand-list' %}
+</div>
+
+<div class="rte">
+	{{ page.content }}
+</div>

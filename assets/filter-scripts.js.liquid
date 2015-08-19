@@ -1,0 +1,87 @@
+{% comment %}
+/*==================================================
+DEFINE VARIABLES
+==================================================*/
+var active_filters = [];
+var original_collection_url = $('#collection_url').val();
+var collection_url = $('#collection_url').val();
+var collection_pages = $('#pagination_pages').val();
+var collection_string = '';
+
+/*==================================================
+LOAD COLLECTION
+==================================================*/
+function loadCollection(){
+	var pages_loaded = 0;
+	for(var i=0; i<collection_pages; i++){
+		$.ajax({
+			type: 'GET',
+			url: collection_url,
+			dataType: 'html',
+			data: {
+				view: 'ajax',
+				page: i+1
+			},
+			success: function(data){
+				pages_loaded++;
+				collection_string += data;
+				if(pages_loaded==collection_pages){
+					renderCollection();
+				}
+			}
+		});
+	}
+}
+
+
+/*==================================================
+RENDER COLLECTION
+==================================================*/
+function renderCollection(){
+	$('.collection-container .grid-uniform').html('');
+	$('.collection-container .grid-uniform').html(collection_string);
+	getActiveFilters();
+}
+
+
+/*==================================================
+LISTEN FOR FILTER SELECT
+==================================================*/
+$(function(){
+	$(document).on('change', '.filter input[type="checkbox"]', function(){
+		var url = [];
+		$('.filter input[type="checkbox"]:checked').each(function(){
+			url.push($(this).val());
+		});
+		url = url.toString().replace(/,/g,'+');
+		collection_url = original_collection_url+'/'+url;
+		$.ajax({
+			type: 'get',
+			url: collection_url,
+			data: {
+				view: 'pages'
+			},
+			success: function(data){
+				collection_pages = jQuery.parseJSON(data).pages;
+				loadCollection();
+			}
+		});
+	});
+});
+
+
+/*==================================================
+GET ACTIVE FILTERS
+==================================================*/
+function getActiveFilters(){
+	active_filters = [];
+	$('.filter').each(function(){
+		var filter_name = $(this).find('h5').text().replace(/ /g,'-').toLowerCase();
+		$(this).find('input:checked').each(function(){
+			var current_filter = $(this).val();
+			$('.indv-product.'+current_filter).addClass(filter_name);
+			console.log(current_filter);
+		});
+	});
+}
+{% endcomment %}

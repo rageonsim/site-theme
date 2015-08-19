@@ -1,0 +1,582 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+<!-- Start Alexa Certify Javascript -->
+<script type="text/javascript">
+_atrk_opts = { atrk_acct:"YOPEj1aotV00aW", domain:"rageon.com",dynamic: true};
+(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+</script>
+<noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=YOPEj1aotV00aW" style="display:none" height="1" width="1" alt="" /></noscript>
+<!-- End Alexa Certify Javascript -->  
+  <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+  {% if settings.favicon_enable %}
+  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+  {% endif %}
+
+  <!-- Title and description ================================================== -->
+  <title>
+  {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <!-- Helpers ================================================== -->
+  {% include 'social-meta-tags' %}
+  
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+
+  <!-- CSS ================================================== -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  {{ 'owl.carousel.css' | asset_url | stylesheet_tag }}
+  {{ '//cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.4/awesome-bootstrap-checkbox.css' | stylesheet_tag }}
+  {{ 'https://cdnjs.cloudflare.com/ajax/libs/jScrollPane/2.0.14/jquery.jscrollpane.min.css' | stylesheet_tag }}
+  {{ 'timber.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+
+  <!-- Header hook for plugins ================================================== -->
+  {{ content_for_header }}
+  {% include 'oldIE-js' %}
+
+  <!-- Scripts ================================================== -->
+
+
+  {{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
+  {{ 'modernizr.min.js' | asset_url | script_tag }}
+  {{ '//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.6.0/jquery.matchHeight-min.js' | script_tag }}
+  {{ '//cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.0.7/jquery.browser.min.js' | script_tag }}
+  {{ 'zoom.js' | asset_url | script_tag }}
+  {{ 'owl.carousel.min.js' | asset_url | script_tag }}
+  {{ 'jquery.lazyload.js' | asset_url | script_tag }}
+  {{ 'sticky-kit.js' | asset_url | script_tag }}
+  
+  {{ 'scripts.js' | asset_url | script_tag }}
+
+  {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {% endif %}
+
+  <script type="text/javascript" src="http://akwww.polyvorecdn.com/rsrc/add_to_polyvore.js"></script>
+    <!-- tony edits -->
+    {{ 'jquery.rwdImageMaps.min.js' | asset_url | script_tag }}
+  <script>
+    $(document).ready(function(e) {
+        $('img[usemap]').rwdImageMaps();
+
+    });
+  </script>
+   <!-- tony edits end -->
+  
+   <!-- Facebook audience pixel start -->
+  <script>(function() {
+var _fbq = window._fbq || (window._fbq = []);
+if (!_fbq.loaded) {
+var fbds = document.createElement('script');
+fbds.async = true;
+fbds.src = '//connect.facebook.net/en_US/fbds.js';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(fbds, s);
+_fbq.loaded = true;
+}
+_fbq.push(['addPixelId', '393245780848897']);
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', 'PixelInitialized', {}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=393245780848897&amp;ev=PixelInitialized" /></noscript>
+  <!-- Facebook audience pixel end -->
+  
+  <!-- Facebook Conversion Code for Adds to Cart - 2 -->
+<script>(function() {
+var _fbq = window._fbq || (window._fbq = []);
+if (!_fbq.loaded) {
+var fbds = document.createElement('script');
+fbds.async = true;
+fbds.src = '//connect.facebook.net/en_US/fbds.js';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(fbds, s);
+_fbq.loaded = true;
+}
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', '6033388608974', {'value':'0.00','currency':'USD'}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6033388608974&amp;cd[value]=0.00&amp;cd[currency]=USD&amp;noscript=1" /></noscript>
+  <!-- end Facebook Conversion Code for Adds to Cart - 2  -->
+</head>
+
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
+    <!-- Addthis  -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-553689d927d7ef25" async="async"></script>
+
+    <!-- Facebook sdk -->
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
+    <header class="header-bar">
+      <div class="main-header">
+        <div class="wrapper">
+          <a class="logo" href="/"><img src="{{ "logo.svg" | asset_url }}" alt="RageOn! Logo" /></a>
+
+          <nav class="main-menu-wrap">
+            <ul class="main-menu">
+              {% for link in linklists.main-menu.links %}
+                 <li {%if link.url == 'http://snapshirt.com/' %}style="display:none" {% endif %} ><a {% if link.active %}class="link-active"{%endif%} href="{{ link.url }}" target={%if link.title == 'Create '%}"_blank" {% else %}"_self" {% endif %}>{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </nav>
+
+          <div class="customer-menu">
+
+            <a href="/cart" class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
+              <i class="header-icon cart-icon-with-count">
+                {{ 'icon-shopping-bag.svg' | asset_url | img_tag }}
+
+                {% if cart.item_count > 0 %}
+                  <span class="cart-count" id="cartCount">{{ cart.item_count }}</span>
+                {% endif %}
+              </i>
+            </a>
+            
+            {% include 'currency-switcher' %}
+            
+            
+            {% if shop.customer_accounts_enabled %}
+              {% if customer %}
+                    <a class="account-link" href="/account">{{ 'layout.customer.account' | t }}</a>
+              {% else %}
+                  {{ 'layout.customer.log_in' | t | customer_login_link }}
+              {% endif %}
+            {% endif %}
+
+            
+            {% include 'search-bar-header' %}
+
+          </div>
+
+          <div class="mobile-nav-left">
+            <button type="button" class="icon-fallback-text mobile-menu-button" aria-controls="NavDrawer" aria-expanded="false">
+              <span class="icon icon-hamburger" aria-hidden="true"></span>
+              <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
+            </button>
+          </div>
+
+          <div class="mobile-nav-right">
+            <a href="/cart" class="cart-icon site-header__cart-toggle mobile-menu-button js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
+              <i class="header-icon cart-icon-with-count">{{ 'icon-shopping-bag.svg' | asset_url | img_tag }}
+                {% if cart.item_count > 0 %}
+                  <span class="cart-count" id="cartCount">{{ cart.item_count }}</span>
+                {% endif %}
+              </i>
+            </a>
+            {% include 'search-bar-header' %}
+          </div>
+        </div>
+      </div>
+      {% assign collection-menu = collection.title | handelize | downcase() %}
+      {% if template contains "collection" %}
+          {% assign linkcount = linklists.[collection-menu].links | size %}
+          {% if linkcount > 0 %}
+            <div class="collection-menu">
+                <ul>
+                {% for link in linklists.[collection-menu].links %}
+                  <li><a {% if link.active %}class="link-active"{%endif%}  href="{{ link.url }}">{{ link.title }}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+          {% endif %}
+        {% endif %}
+    </header>
+
+      <div id="NavDrawer" class="drawer drawer--left">
+        <div class="drawer__header">
+          {% if shop.customer_accounts_enabled %}
+            {% if customer %}
+                  <a id="customer_login_link" class="account-link" href="/account">Account</a>
+                {{ 'layout.customer.log_out' | t | customer_logout_link }}
+            {% else %}
+                {{ 'layout.customer.log_in' | t | customer_login_link }}
+            {% endif %}
+          {% endif %}
+        </div>
+
+        <ul class="mobile-nav">
+          {% for link in linklists.main-menu.links %}
+            {% assign child_list_handle = link.title | handleize %}
+            {% if linklists[child_list_handle].links != blank %}
+              <li class="mobile-nav__item{% if link.active %} mobile-nav__item--active{% endif %}" aria-haspopup="true">
+                <div class="mobile-nav__has-sublist">
+                  <a href="{{ link.url }}" class="mobile-nav__link" >{{ link.title }}</a>
+                  <div class="mobile-nav__toggle">
+                    <button type="button" class="icon-fallback-text mobile-nav__toggle-open">
+                      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                      <span class="fallback-text">See More</span>
+                    </button>
+                    <button type="button" class="icon-fallback-text mobile-nav__toggle-close">
+                      <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                      <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
+                    </button>
+                  </div>
+                </div>
+                <ul class="mobile-nav__sublist">
+                  {% for childlink in linklists[child_list_handle].links %}
+                    <li class="mobile-nav__item {% if childlink.active %} mobile-nav__item--active{% endif %}">
+                      <a href="{{ childlink.url }}" class="mobile-nav__link">{{ childlink.title | escape }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% else %}
+              <li class="mobile-nav__item{% if link.active %} mobile-nav__item--active{% endif %}">
+                <a href="{{ link.url }}" class="mobile-nav__link" target={%if link.url == 'http://snapshirt.com/' %}"_blank" {% else %}"_self" {% endif %} >{{ link.title }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+
+          <li class="mobile-nav__item{% if link.active %} mobile-nav__item--active{% endif %}" aria-haspopup="true">
+            <div class="mobile-nav__has-sublist">
+              <a class="mobile-info-link mobile-nav__link">Information</a>
+              <div class="mobile-nav__toggle">
+                <button type="button" class="icon-fallback-text mobile-nav__toggle-open">
+                  <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                  <span class="fallback-text">See More</span>
+                </button>
+                <button type="button" class="icon-fallback-text mobile-nav__toggle-close">
+                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                  <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
+                </button>
+              </div>
+            </div>
+
+            <ul class="mobile-nav__sublist mobile-footer-links">
+              {% for childlink in linklists.footer.links %}
+                <li class="mobile-nav__item {% if childlink.active %} mobile-nav__item--active{% endif %}">
+                  <a href="{{ childlink.url }}" class="mobile-nav__link">{{ childlink.title | escape }}</a>
+                </li>
+              {% endfor %}
+              {% for childlink in linklists.footer-right.links %}
+                <li class=" mobile-nav__item {% if childlink.active %} mobile-nav__item--active{% endif %}">
+                  <a href="{{ childlink.url }}" class="mobile-nav__link">{{ childlink.title | escape }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div id="CartDrawer" class="drawer drawer--right">
+        <div class="drawer__header">
+          <div class="drawer__title h3">{{ 'cart.general.title' | t }}</div>
+          <div class="drawer__close js-drawer-close">
+            <button type="button" class="icon-fallback-text">
+              <span class="icon icon-x" aria-hidden="true"></span>
+              <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
+            </button>
+          </div>
+        </div>
+        <div id="CartContainer"></div>
+      </div>
+
+      <div id="PageContainer" class="">
+        <main class="wrapper main-content" role="main">
+          {{ content_for_layout }}
+        </main>
+      </div>
+
+      <div class="slim-footer">
+        <div class="wrapper grid">
+          <div class="grid__item large--one-third chat-box">
+            <a id="olark-thing" class="toggle-olark"><span><i class="fa fa-comment"></i>Chat Live</span></a>
+          </div>
+          <div class="grid__item large--one-third shipping-box">
+            <p class="text-center">{{ settings.slim_footer_message }}</p>
+          </div>
+          <div class="grid__item large--one-third">
+            <div class="slim-social">
+              <p class="social-title">Follow Us</p>
+              <ul class="social-icons">
+                <li><a target="_blank" href="{{ settings.social_facebook_link }}"><i class="fa fa-facebook"></i></a></li>
+                <li><a target="_blank" href="{{ settings.social_instagram_link }}"><i class="fa fa-instagram"></i></a></li>
+                <li><a target="_blank" href="{{ settings.social_twitter_link }}"><i class="fa fa-twitter"></i></a></li>
+                <li><a target="_blank" href="{{ settings.social_pinterest_link }}"><i class="fa fa-pinterest-p"></i></a></li>
+                <li><a target="_blank" href="{{ settings.social_google_plus_link }}"><i class="fa fa-google-plus"></i></a></li>
+                <li><a target="_blank" href="{{ settings.social_youtube_link }}"><i class="fa fa-youtube-play"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="site-footer" role="contentinfo">
+        <div class="fly-out-footer">	
+          <div class="wrapper">
+            <div class="grid">
+              <div class="grid__item large--one-third footer-links">
+                <h4 class="mar-bottom ">Information</h4>
+                <div class="grid">
+                  <div class="grid__item large--one-half medium--one-half small--one-half">
+                    <ul class="footer-links-left">
+                    {% for link in linklists.footer.links %}
+                      <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                    {% endfor %}
+                    </ul>
+                  </div>
+                  <div class="grid__item large--one-half medium--one-half small--one-half">
+                   <ul class="footer-links-right">
+                    {% for links in linklists.footer-right.links %}
+                      <li><a href="{{ links.url }}">{{ links.title }}</a></li>
+                    {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="grid__item large--one-third testClass">
+                <h4 class="mar-bottom" >Free Shipping On USA Orders Over $75 / $200 Int</h4>
+                <h4>Sign Up For Email</h4>
+                <form action="https://docs.google.com/a/rageon.com/forms/d/1SzkaM9dKgRiClIiINFFsjTFWpxJjOvG23Ie_7xvAwSw/formResponse" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
+                  <input type="email" placeholder="Enter your email address" value="" name="entry.544868782" id="mail" class="input-group-field" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off">
+                  <span class="input-group-btn">
+                    <input type="submit" class="btn" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}">
+                  </span>
+                </form>
+                <!--
+                <form action="{{ settings.newsletter_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
+                  <input type="email" placeholder="Enter your email address" value="" name="EMAIL" id="mail" class="input-group-field" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off">
+                  <span class="input-group-btn">
+                    <input type="submit" class="btn" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}">
+                  </span>
+                </form>
+				-->
+                <p>By entering your email address, you agree to receive RageOn! offers, promotions and other commercial messages. You may unsubscribe at any time.</p>
+                <div class="fly-out-social">
+                  <p class="social-title">Follow Us</p>
+                  <ul class="social-icons">
+                    <li><a target="_blank" href="{{ settings.social_facebook_link }}"><i class="fa fa-facebook"></i></a></li>
+                    <li><a target="_blank" href="{{ settings.social_instagram_link }}"><i class="fa fa-instagram"></i></a></li>
+                    <li><a target="_blank" href="{{ settings.social_twitter_link }}"><i class="fa fa-twitter"></i></a></li>
+                    <li><a target="_blank" href="{{ settings.social_pinterest_link }}"><i class="fa fa-pinterest-p"></i></a></li>
+                    <li><a target="_blank" href="{{ settings.social_google_plus_link }}"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a target="_blank" href="{{ settings.social_youtube_link }}"><i class="fa fa-youtube-play"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="grid__item large--one-third">
+                
+                  {% for article in blogs['news'].articles limit:1 %}
+                	
+                    <a href="{{ article.url }}">
+                      <h4 class="mar-bottom latest-blog" >Latest Blog Post</h4>
+                      <div class="rte">
+                        {% if article.excerpt.size > 0 %}
+                          {{ article.excerpt }}
+                        {% else %}
+                          <p>{{ article.content | strip_html | truncatewords: 30 }}</p>
+                        {% endif %}
+                      </div>
+                    </a>
+                  {% endfor %}
+
+                	<a class="secure-badge" href="https://www.shopify.com/?utm_source=secure&amp;utm_medium=shop" title="This online store is secured by Shopify" target="_blank"><img src="https://s3.amazonaws.com/uploads.hipchat.com/53142/1641594/F1c1GkFZMSqHMFH/shopify-secure-badge.png" alt="Shopify secure badge" /></a>
+
+
+                  {% capture current_year %}{{ 'now' | date: '%Y' }}{% endcapture %}
+                  <p class="copyright">Copyright &copy; {{ current_year: current_year }} RageOn! - The World's Largest All-Over-Print Online Store</p>
+                </div>
+              </div>
+          </div>
+        </div>
+      </footer>
+
+      {{ 'fastclick.min.js' | asset_url | script_tag }}
+      {{ 'timber.js' | asset_url | script_tag }}
+
+      {% comment %}
+        Template-specific js
+      {% endcomment %}
+      <script>
+        {% if newHash %}
+          $(function() {
+            timber.updateHash('{{ newHash }}');
+          });
+        {% endif %}
+        {% if resetPassword %}
+          $(function() {
+            timber.resetPasswordSuccess();
+          });
+        {% endif %}
+      </script>
+
+      {% comment %}
+        Ajaxify your cart with this plugin.
+        Documentation:
+          - http://shopify.com/timber#ajax-cart
+      {% endcomment %}
+
+      {% if settings.ajax_cart_enable %}
+        {{ 'handlebars.min.js' | asset_url | script_tag }}
+        {% include 'ajax-cart-template' %}
+        {{ 'ajax-cart.js' | asset_url | script_tag }}
+        <script>
+          jQuery(function($) {
+            ajaxCart.init({
+              formSelector: '#AddToCartForm',
+              cartContainer: '#CartContainer',
+              addToCartSelector: '#AddToCart',
+              cartCountSelector: '#CartCount',
+              cartCostSelector: '#CartCost',
+              moneyFormat: {{ shop.money_format | json }}
+            });
+          });
+
+          jQuery('body').on('ajaxCart.afterCartLoad', function(evt, cart) {
+            // Bind to 'ajaxCart.afterCartLoad' to run any javascript after the cart has loaded in the DOM
+            timber.RightDrawer.open();
+          });
+        </script>
+      {% endif %}
+
+      {% include 'currencies' %}
+  
+  <script>
+  
+  /*==================================================
+   Sense if mobile, and assign cart attribute 
+  ==================================================*/
+
+    var isMobile = { 
+      Android: function() { return navigator.userAgent.match(/Android/i); }, 
+      BlackBerry: function() { return navigator.userAgent.match(/BlackBerry/i); }, 
+      iOS: function() { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, 
+      Opera: function() { return navigator.userAgent.match(/Opera Mini/i); }, 
+      Windows: function() { return navigator.userAgent.match(/IEMobile/i); }, 
+      any: function() { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); }
+    };
+        
+        
+    
+    {% if template contains 'cart' %}
+        {% if cart.attributes.is_mobile != blank %}
+    	jQuery.ajax({ 
+          type: 'POST',
+          data: "attributes[is_mobile]=",
+          dataType: 'json',
+          url: '/cart/update.js',
+          success: function(cart) {
+              window.location.href = document.URL;
+          }
+    	});
+        {% endif %}
+    {% else %}
+        {% if cart.attributes.is_mobile == blank %}
+        if(isMobile.any()){
+          jQuery.ajax({ 
+            type: 'POST',
+            data: "attributes[is_mobile]=true",
+            dataType: 'json',
+            url: '/cart/update.js',
+            success: function(cart) {
+                window.location.href = document.URL;
+            }
+        });
+
+        }
+        {% endif %}
+    {% endif %}
+  </script>
+  
+  <!-- CRITEO -->
+    <script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="true"></script>
+    <script type="text/javascript">
+      var site_type = /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : /iPad/.test(navigator.userAgent) ? "t" : "d";
+      window.criteo_q = window.criteo_q || [];
+      window.criteo_q.push(
+        { event: "setAccount", account: 16029},
+        { event: "setSiteType", type: site_type});
+    </script>
+    {% case template %}
+      {% when 'index' %}
+        <script type="text/javascript">
+          window.criteo_q.push(
+            { event: "viewHome"}
+          );
+        </script>
+      {% when 'collection' %}
+        <script>
+          var criteo_items = [];
+          {% for item in collection.products limit:3 %}
+            criteo_items.push("{{item.handle}}");
+          {% endfor %}
+            window.criteo_q.push(
+              { event: "viewList", product: criteo_items}
+            );
+        </script>
+      {% when 'product' %}
+        <script type="text/javascript">
+          window.criteo_q.push(
+            { event: "viewItem", product: "{{ product.handle }}" }
+          );
+        </script>
+      {% when 'cart' %}
+        <script>
+          var criteo_items = [];
+          {% for item in cart.items %}
+            criteo_items.push({
+              id : "{{item.product.handle}}",
+              price : {{item.price | money_without_currency}},
+              quantity : {{item.quantity}}
+            });
+          {% endfor %}
+          window.criteo_q.push(
+            { event: "viewBasket", product: criteo_items}
+          );
+        </script>
+    {% endcase %}
+  
+  <script type="text/javascript">
+            (function(){function r(s){return s.replace(/[A-z]/g,function(c){return String.fromCharCode(c.charCodeAt(0)+('M'>=c.toUpperCase()?13:-13))})}
+    var c=document.createElement('script'),wdefine=typeof define!=='undefined'?define:false;c.type='text/javascript';c.async=true;
+    c.setAttribute('data-main',r('//ncc.zlfnsrhey.pbz/ncc.wf'));c.src='//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js';
+    c.onload=function(){mydefine=define,define=wdefine?wdefine:null;};
+    var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(c,s);
+})();
+</script>
+  
+<!-- Power Tools view count code -->
+{% if template == 'product' %}
+<script type="text/javascript">
+(function () {
+var oldonload = window.onload;
+window.onload = function(){
+   var scr = document.createElement("script");
+   scr.setAttribute('async', 'true');
+   scr.type = "text/javascript";
+   scr.src = "http://ping.shopifypowertools.com/ping/{{ shop.permanent_domain }}/{{ product.id }}?weight=1{% if collection %}&collection_id={{ collection.handle }}{% endif %}";
+   ((document.getElementsByTagName('head') || [null])[0] ||
+    document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+   if(oldonload){oldonload()}};
+}());
+</script>
+{% endif %}
+<!-- Power Tools view count code -->
+</body>
+</html>

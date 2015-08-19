@@ -1,0 +1,82 @@
+{% comment %}
+
+<script>
+
+// Check array of Brands to see if the current collection is a brand  
+  
+$(document).ready(function(){
+  
+  
+  // Get current collection handle and store to variable
+  
+  {% assign collectionHandle = collection.url | remove: "/collections/" %}
+  var currentCollection = "{{ collectionHandle }}";
+  
+  
+  // create array of brands
+  var arr = new Array();
+
+  $('.brand-list li').each(function() { 
+    arr.push(this.innerHTML); 
+  })  
+  
+
+  if ( $.inArray(currentCollection, arr) > -1 ) {
+	$('#SortBy option[value="title-ascending"]').prop('selected',true);
+  }
+  
+  console.log(arr);
+  
+});
+  
+</script>
+
+<ul class="brand-list" style="display:none;">
+  {% for vendor in shop.vendors %}
+  	<li>{{ vendor | handleize }}</li>
+  {% endfor %}
+</ul>
+
+
+{% endcomment %}
+
+<!-- /snippets/collection-sorting.liquid -->
+<div class="form-horizontal">
+  <label for="SortBy">{{ 'collections.sorting.title' | t }}</label>
+  <select name="SortBy" id="SortBy">
+    <option value="manual">Popular</option>
+    <option value="best-selling">Best Ever</option>
+    <option value="created-descending">Newest</option>
+    <option value="created-ascending">Oldest</option>
+    <option value="price-ascending">Lowest Price First</option>
+    <option value="price-descending">Highest Price First</option>
+    <option value="title-ascending">A-Z</option>
+    <option value="title-descending">Z-A</option>
+  </select>
+</div>
+
+<script>
+  /*============================================================================
+    Inline JS because collection liquid object is only available
+    on collection pages and not external JS files
+  ==============================================================================*/
+  Shopify.queryParams = {};
+  if (location.search.length) {
+    for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+      aKeyValue = aCouples[i].split('=');
+      if (aKeyValue.length > 1) {
+        Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+      }
+    }
+  }
+
+  $(function() {
+    $('#SortBy')
+      .val('{{ collection.sort_by | default: collection.default_sort_by }}')
+      .bind('change', function() {
+        Shopify.queryParams.sort_by = jQuery(this).val();
+        location.search = jQuery.param(Shopify.queryParams);
+      }
+    );
+  });
+</script>

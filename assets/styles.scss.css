@@ -1,0 +1,334 @@
+/* tony edits */
+
+.collection-menu  a {
+  text-decoration: none !important;
+}
+.product-single__variants {
+	display:none !important;
+}
+#AddToCartForm .selector-wrapper:first-of-type {
+	display:block !important;
+}
+.size-chart td, .size-chart th {
+	text-align:center;
+}
+/* shipping */
+  #shipping h1 {
+     display:none;
+
+  }
+  #shipping .rte h1 {
+        display:block;
+  }
+
+
+/* product slide show */
+  .indv-product .image a img.second { display: none; }
+   .indv-product .image a:hover img.first { display: none; }
+   .indv-product .image a:hover img.second { display: block; }
+   .indv-product .image  {
+   		overflow-y: hidden;
+        overflow-x: hidden !important;
+   }  
+	.indv-product .image  {
+        padding:2%;
+        
+    }
+   .indv-product .image img {
+        -webkit-transition: all 2s ease; /* Safari and Chrome */
+        -moz-transition: all 2s ease; /* Firefox */
+        -ms-transition: all 2s ease; /* IE 9 */
+        -o-transition: all 2s ease; /* Opera */
+        transition: all 2s ease;
+        
+    }
+
+    .indv-product .image:hover img {
+        -webkit-transform:scale(1.1); /* Safari and Chrome */
+        -moz-transform:scale(1.1); /* Firefox */
+        -ms-transform:scale(1.1); /* IE 9 */
+        -o-transform:scale(1.1); /* Opera */
+         transform:scale(1.1);
+    }
+	
+	/* MikeS Edits: 08/03/15 */
+	#ProductPhoto,
+	.indv-product .image {
+      position: relative;
+    }
+	#ProductPhoto img.ready-to-ship-banner,
+	.indv-product .image img.ready-to-ship-banner {
+      /* putting this here to not edit above code, :not(.ready-to-ship-banner) on 27 would be good */
+      -webkit-transition: none; /* Safari and Chrome */
+      -moz-transition: none; /* Firefox */
+      -ms-transition: none; /* IE 9 */
+      -o-transition: none; /* Opera */
+      transition: none;
+      /* new styles */
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 20%;
+      height: auto;
+    }
+	/* End MikeS Edits */
+	
+ 
+/* a-culture-of-awesomeness */
+#a-culture-of-awesomeness blockquote, #a-culture-of-awesomeness p {
+	margin-bottom: 0px;
+}  
+/* kids page */
+#kids #type-kids ,#kids label[for="type-kids"]  {
+	display:none;
+}
+/* media page */
+.col-2-img, .col-3-img  {
+	margin-left: auto;
+    margin-right: auto;
+    width: 103%;
+    position: relative;
+    left: -2%;
+  	float: left;
+} 
+.col-2-img a ,.col-3-img a  {
+	display: inline-block !important;
+
+}
+.col-2-img .caption ,.col-3-img .caption  {
+	width:102% !important;
+
+}
+.col-2-img a  {
+	    display: inline-block ;
+          width: 49.5%;
+     
+  	padding: 0 10px 0 10px;
+
+} 
+.col-3-img a  {
+	display: inline-block;
+   	width: 33%;
+  	padding: 0px 14px 0px 14px;
+} 
+.col-2-img img, .col-3-img img {
+  	width: 100%;
+} 
+.img-bars {
+	text-align:center;
+}
+.img-bars img {
+	max-width 100%;
+  	width:100%;
+}
+
+/* footer */
+.mar-bottom {
+    color: #636363;
+}
+.latest-blog {
+    margin-bottom: 5px !important;
+}
+.social-icons li a i {
+  width: 20px;
+  height: 20px;
+  font-size: 2em;
+    padding-top: 3px;
+}
+.social-title {
+	  padding-top: 4px;	
+}
+.slim-footer .chat-box, .slim-footer .shipping-box {
+	padding-top: 4px;
+}
+/* coopt modal/ plugin */
+.coopt-v2-powered-by {
+	display:none !important;	
+}
+.coopt-v2-message {
+  font-style: normal !important;
+  color: #000 !important;
+  font-weight: bold !important;
+  font-size: 1.4em !important;
+}
+.coopt-v2-message .coopt-v2-green {
+  color: red !important;
+}
+a.coopt-v2-send, a.coopt-v2-continue {
+	background-color: #000 !important;
+  	border-radius: 0px !important;
+    padding: 15px 32px !important;
+}
+.coopt-v2-no-thanks, .coopt-v2-cancel {
+	color:#000 !important;
+}
+.coopt-v2-close {
+  cursor: pointer !important;
+  height: 20px !important;
+  width: 20px !important;
+  background: #474747 !important;
+  border: 0;
+  color: #fff !important;
+  font-size: 26px !important;
+  line-height: 12px !important;
+  color: #fff !important;
+
+  position: absolute;
+  right: 2% !important;
+  top: 1% !important;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  font-family: Arial!important;
+  font-weight: 800 !important;
+  padding: 4px 2px 2px 3px !important;
+  -webkit-font-smoothing: antialiased;
+}
+.coopt-v2-fine-print {
+  color: #000 !important;
+}
+.coopt-v2-pop-out {
+  display:none !important;
+}
+.coopt-v2-continue {
+	color:#fff !important; 
+}
+.coopt-modal, .coopt-wash {
+	display:none !important;
+}
+/* nav */
+a[href="http://snapshirt.com/"] { 
+  	display:none;
+  }
+/* slider
+.owl-stage .owl-item {
+	visibility :hidden;
+}
+.owl-carousel .owl-stage .active {
+	visibility :visible ;
+}
+ */
+
+@media screen and (max-width: 670px) {
+  img {
+  	max-width:100%;
+  }
+  /* builder page */
+  #builder .product-form button  {
+        font-size: .8em;
+  }
+  /* tables and such */
+  table, .sizing-chart-tab table {
+    min-width:0px;
+  }
+  td, table, tbody, tr {
+    max-width: 100%;
+    display: block;
+    height: auto;
+  }
+  .large--one td, .large--one h1 {
+    text-align: center;
+    margin-left:auto;
+    margin-right:auto;
+    width: 100%;
+  }
+  .datagrid td, .sizing-chart-tab td {
+  	  display: table-cell;
+      padding: 0px;
+      min-width: 40px;
+     text-align: center;
+  }
+  .datagrid th, .sizing-chart-tab th {
+      padding: 0px;
+  }
+  .datagrid tr, .sizing-chart-tab tr {
+  	  display: table-row;
+  }
+  .datagrid table, .sizing-chart-tab table {
+  	  display: table;
+  }
+  .datagrid tbody, .sizing-chart-tab tbody {
+    display: table-row-group;
+  }
+  table  div {
+  	max-width:100%;
+  }
+  /* other pages and such */
+  #rage-on-let-39-s-rage-sponsored-brand-representative-sign-up-form .main img {
+  	width:100% !important;
+  }
+ .tabs li {
+    font-size: 0.9em;
+  }
+  /* brand rep more info */
+  .brand-rep-info div {
+  	padding-left:0px !important;
+    text-align:left;
+  }
+  .brand-rep-info td {
+    text-align:left;
+  }
+  /* side/ main menu  */
+  a[href="/pages/builder"] { 
+  	display:block;
+  }
+  a[href="http://snapshirt.com/"] { 
+      	display:none !important;
+  }
+  
+  /* footer */
+  .footer-links ul {
+  	margin-bottom: 0px;
+  }
+  .grid__item.large--one-third h4 {
+    margin-bottom: 30px;
+  }
+  .fly-out-footer .social-title {
+    margin-bottom:0px;
+  }
+  .social-icons li a i {
+    width: 35px;
+    height: 35px;
+    padding-top: 6px;
+    font-size: 2.9em;
+  }   
+  /* media page */
+
+  .col-2-img a , .col-3-img a  {
+      display: block !important;
+      width:95%;
+      margin-left:auto;
+      margin-right:auto;
+      padding:0px !important;
+
+  } 
+  .col-2-img , .col-3-img {
+  	    left: -3%;
+  		width: 107%;
+      padding-left:0px;
+  }
+  
+
+
+}
+@media only screen and (max-width: 480px) {
+  .small--one-half {
+    width: 49% !important;
+  }
+
+}
+
+@media screen and (max-width: 970px){
+  .customer-menu {
+      display: block;
+      height: 0;
+      width: 58px;
+      overflow: visible;
+      float: left;
+      left: 14%;
+      position: absolute;
+  }
+  .customer-menu .account-link, .customer-menu .site-header__cart-toggle, .customer-menu #customer_login_link, .customer-menu .search-bar  {
+  	display:none;
+  }
+  
+}

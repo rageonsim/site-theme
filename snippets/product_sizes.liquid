@@ -1,0 +1,8 @@
+{% capture output %}
+{% for tag in product.tags %}
+{% if tag contains 'size-' %}
+,{{ tag | handleize }}
+{% endif %}
+{% endfor %}
+{% endcapture %}
+{{ output | strip_newlines | remove_first: ',' }}

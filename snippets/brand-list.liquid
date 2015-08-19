@@ -1,0 +1,357 @@
+<div class="grid__item one-quarter small--one-whole">
+		<div class="brand-list-number">
+			<h3>#</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | remove:"..." %}
+				{% if brand-letter contains "0" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+				{% if brand-letter contains "1" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+				{% if brand-letter contains "2" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+				{% if brand-letter contains "3" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+				{% if brand-letter contains "4" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+				{% if brand-letter contains "5" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+				{% if brand-letter contains "6" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+				{% if brand-letter contains "7" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+				{% if brand-letter contains "8" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+				{% if brand-letter contains "9" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-a">
+			<h3>A</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "A" %}
+              <li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-b">
+			<h3>B</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "B" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-c">
+			<h3>C</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "C" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-d">
+			<h3>D</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter contains "D" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-e">
+			<h3>E</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "E" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="grid__item one-quarter small--one-whole">
+		<div class="brand-list-f">
+			<h3>F</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "f" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-g">
+			<h3>G</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "G" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-h">
+			<h3>H</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..."  %}
+				{% if brand-letter == "H" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-i">
+			<h3>I</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "I" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-j">
+			<h3>J</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "J" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-k">
+			<h3>K</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "K" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="grid__item one-quarter small--one-whole">
+		<div class="brand-list-l">
+			<h3>L</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "L" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-m">
+			<h3>M</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "M" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-n">
+			<h3>N</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "N" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-o">
+			<h3>O</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "O" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-p">
+			<h3>P</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "P" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="grid__item one-quarter small--one-whole">
+		<div class="brand-list-q">
+			<h3>Q</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "Q" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-r">
+			<h3>R</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "R" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-s">
+			<h3>S</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "S" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-t">
+			<h3>T</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "T" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-u">
+			<h3>U</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "U" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-v">
+			<h3>V</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "V" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-w">
+			<h3>W</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "W" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-x">
+			<h3>X</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "X" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-y">
+			<h3>Y</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "Y" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div class="brand-list-z">
+			<h3>Z</h3>
+			<ul>
+			{% for product_vendor in shop.vendors %}
+			{% assign brand-letter = product_vendor | truncate: 4 | upcase | remove:"..." %}
+				{% if brand-letter == "Z" %}
+					<li data-brand-letter="{{ product_vendor | truncate: 4 | remove:"..." }}" class="{{ product_vendor }}"><a href="/collections/{{product_vendor | handleize }}">{{ product_vendor }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
