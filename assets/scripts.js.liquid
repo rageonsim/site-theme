@@ -1,0 +1,210 @@
+//=========================================================================
+//  Bold Scripts
+//=========================================================================
+
+$(document).ready(function(){
+
+  /*==================================================
+  // Initiate owlCarousel
+  ==================================================*/
+  
+  $(".main-slider a").sort(sort_li).appendTo('.main-slider');
+    function sort_li(a, b){
+    return ($(b).data('sort-order')) < ($(a).data('sort-order')) ? 1 : -1;
+  }
+
+  $('.main-slider').owlCarousel({
+    loop:true,
+    nav:true,
+    navText:[,],
+    autoplay: true,
+    autoplayTimeout: 6000,
+    lazyLoad: true,
+    smartSpeed:400,
+    items:1
+  });
+
+  
+  /*==================================================
+  // Get height of header and
+  // Ensure that the search wrapper and page are offset properly
+  ==================================================*/
+  
+  var headerHeight = $('.header-bar').outerHeight();
+  var headerHeightCollection = $('.header-bar').outerHeight()+10;
+
+  $('#PageContainer').css('padding-top', headerHeight);
+  $('.template-collection #PageContainer').css('padding-top', headerHeightCollection);
+
+
+  /*==================================================
+  // Tabs on product page
+  ==================================================*/
+  
+  $('.tabs li').on('click', function(){
+    $('#tab-container .active').removeClass('active');
+    $(this).addClass('active');
+    var index = $(this).attr('data-index');
+    $('.tab-content li[data-index="'+index+'"]').addClass('active');
+  });
+
+
+  /*==================================================
+  // MatchHeight on product grid
+  ==================================================*/
+  
+  $('.related-products .grid__item').matchHeight();
+  
+  var windowSize = $(window).width();
+
+  if (windowSize < 768) {
+  } else {
+    $('.caption').matchHeight();
+  }
+
+  /*==================================================
+  // Mobile Filter Drawer
+  ==================================================*/
+  
+  var removeClass = true;
+  $(".mobile-filter-button").on('click', function(){
+    $(".sidebar-filters").toggleClass('filter-slide');
+    $('body').toggleClass('point-event-no');
+    removeClass = false;
+  });
+
+  $(".sidebar-filters").on('click', function(){
+    removeClass = false;
+  });
+
+
+  $("html").on('click', function(){
+    if (removeClass) {
+      $(".sidebar-filters").removeClass('filter-slide');
+      $('body').removeClass('point-event-no');
+    }
+    removeClass = true;
+  });
+  
+  
+   /*==================================================
+  // Mobile Menu Drawer
+  ==================================================*/
+  
+  var menuRemoveClass = true;
+  $(".mobile-menu-button").on('click', function(){
+    $(".drawer--left").toggleClass('menu-slide');
+    $('body').toggleClass('point-event-no-menu');
+    menuRemoveClass = false;
+  });
+
+  $(".drawer--left").on('click', function(){
+    menuRemoveClass = false;
+  });
+
+
+  $("html").on('click', function(){
+    if (menuRemoveClass) {
+      $(".drawer--left").removeClass('menu-slide');
+      $('body').removeClass('point-event-no-menu');
+    }
+    menuRemoveClass = true;
+  });
+  
+
+  /*=======================================================================
+   Append Polyvore icon to the share section when it is added to the dom
+  =========================================================================*/
+  
+  var count = 0;
+
+  $('body').on('DOMNodeInserted', '.at-share-tbx-element', function(e) {
+    count+=1;
+
+    if (count == 1){
+
+      var PolyvoreBtn = $('#addToPolyvore');
+      $('.at-share-tbx-element').append(PolyvoreBtn);
+      $('#addToPolyvore').css('display', 'inline-block');
+
+    } else {
+
+    } 
+  });
+
+  
+  /*==================================================
+  // Toggle display of olark
+  ==================================================*/
+  olark('api.box.hide');
+  
+  $('#olark-thing').click(function(){
+    if ( $(this).hasClass('toggle-olark')){
+		olark('api.box.show');
+    	olark('api.box.expand');    	
+    } else {
+    	olark('api.box.hide');
+    }
+    
+    $(this).toggleClass('toggle-olark');
+    
+  });
+  
+  
+  /*==================================================
+  // Hide empty letters from brand list
+  ==================================================*/
+  
+  $('.brand-list ul:not(:has(li))').parent('div').remove();
+
+  
+  /*==================================================
+  // Random Brand spotlight on page load
+  ==================================================*/
+
+  var elems = $(".indv-brand-spotlight");
+  if (elems.length) {
+    var keep = Math.floor(Math.random() * elems.length);
+    for (var i = 0; i < elems.length; ++i) {
+      if (i !== keep) {
+        $(elems[i]).hide();
+      }
+    }
+  }
+
+ 
+  $('.mobile-info-link').on( "click", function() {
+  	$(this).parents('.mobile-nav__has-sublist').toggleClass('mobile-nav--expanded');
+  });
+  
+  
+  {% comment %}
+  
+  /*==================================================
+  // Check to see if collection is a brand
+  ==================================================*/
+  
+  
+   // Check array of Brands to see if the current collection is a brand  
+  
+    // Get current collection handle and store to variable
+
+    {% assign collectionHandle = collection.url | remove: "/collections/" %}
+    var currentCollection = "{{ collectionHandle }}";
+
+    // create array of brands
+    var arr = new Array();
+
+    $('.brand-list li').each(function() { 
+      arr.push(this.innerHTML); 
+    })  
+
+    if ( $.inArray(currentCollection, arr) > -1 ) {
+      console.log('brand!!!');
+    } else {
+      console.log('notbrand!!!');
+    }
+  
+  {% endcomment %}
+    
+});

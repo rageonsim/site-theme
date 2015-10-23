@@ -1,0 +1,50 @@
+<!-- /snippets/product-grid-item.liquid -->
+
+{% unless grid_item_width %}
+  {% assign grid_item_width = 'large--one-quarter medium--one-half small--one-half' %}
+{% endunless %}
+
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% if product.available %}
+  {% assign sold_out = false %}
+{% endif %}
+
+
+
+<div class="grid__item {{ grid_item_width }} indv-product">
+  <a href="{{ product.url | within: collection }}" class="grid__image">
+    <img class="image" style="display:none" src="{% if cart.attributes.is_mobile == 'true' %}{{ product.featured_image.src | img_url: 'large' }}{% else %}{{ product.featured_image.src | img_url: 'large' }}{% endif %}" alt="{{ product.featured_image.alt | escape }}">
+    <div class="image" style="display:block">
+      <a href="{{ product.url }}">
+      {% if product.images.size > 1 %}
+        <img class="first test" src="{{ product.images[0] | product_img_url: 'large' }}" alt="{{ product.title | escape  }}" />
+        <img class="second" src="{{ product.images[1] | product_img_url: 'large' }}" alt="{{ product.title | escape  }}" />
+      {% elsif product.images.size == 1 %}
+        <img class="first test" src="{{ product.images[0] | product_img_url: 'large' }}" alt="{{ product.title | escape  }}" />
+        <img class="second" src="{{ product.images[0] | product_img_url: 'large' }}" alt="{{ product.title | escape  }}" />
+      {% endif %}
+	  {% if  product.tags contains 'Ready To Ship' %}
+        <img class="ready-to-ship-banner" src="{{  'Ready_to_Ship_Icon_thumb.png' | asset_url  }}" alt="Ready to Ship!" />    
+      {% else %}
+        <img style="display:none;" class="ready-to-ship-banner" src="{{  'Ready_to_Ship_Icon_thumb.png' | asset_url  }}" alt="Ready to Ship!" />
+      {% endif %}
+      </a>
+    </div>
+    <div class="indv-product-info">
+      <a href="{{ product.url | within: collection }}">
+      	<h4 class="h5">{{ product.title }}</h4>
+      </a>
+      <a  class="underline"  href="/collections/{{product.vendor | handleize }}">
+      	<h6>{{ product.vendor }}</h6>
+      </a>
+      <a href="{{ product.url | within: collection }}">
+        <p>{{ product.price | money_with_currency }}<span class="compare-price {{ product.compare_at_price_max  }}" {% if product.compare_at_price_max  == 0 %} style="display:none"  {% endif %}  >{{ product.compare_at_price_max | money_with_currency }}</span></p>
+      </a>
+     </div>
+  </a>
+</div>

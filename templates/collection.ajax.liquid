@@ -1,0 +1,25 @@
+{% capture output %}{% layout none %}
+{% paginate collection.products by 48 %}
+{% for product in collection.products %}
+{
+"handle": "{{ product.handle | replace: '"', "&quot;" }}",
+"id": "{{ product.id | replace: '"', "&quot;" }}",
+"url": "{{ product.url }}",
+"title": "{{ product.title | replace: '"', "&quot;" }}",
+"vendor": "{{ product.vendor | replace: '"', "&quot;" }}",
+"vendor_handle": "vendor-{{ product.vendor | handleize }}",
+"featured_image": "{{ product.featured_image | product_img_url: 'large' }}",
+"price": "{{ product.price | money_with_currency }}",
+"price_raw": {{ product.price }},
+"compare_at_price": "{{ product.compare_at_price | money_with_currency}}",
+"tags": "{% for tag in product.tags %}{{ tag | replace: '"', "&quot;" | handleize }}{% unless forloop.last %},{% endunless %}{% endfor %}",
+"themes": "{% include 'product_themes' %}",
+"type": "{{ product.type }}",
+"type_handle": "type-{{ product.type | handleize }}",
+"sizes": "{% include 'product_sizes' %}",
+"shipping_times": "{% include 'shipping_times' %}",
+"collection_order": {{ forloop.index | plus: paginate.current_offset }}
+},
+{% endfor %}
+{% endpaginate %}{% endcapture %}
+{{ output | strip_newlines }}

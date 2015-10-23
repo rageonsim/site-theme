@@ -1,0 +1,6 @@
+{% layout none %}
+{% paginate collection.products by 100 %}
+{
+	"pages": {{ paginate.pages }}
+}
+{% endpaginate %}

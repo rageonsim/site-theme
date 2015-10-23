@@ -1,0 +1,85 @@
+{% assign desc_raw = product.description %}
+{% assign desc_raw = desc_raw | replace: '<div>[', '[' | replace: ']</div>', ']' | replace: '<span>[', '[' | replace: ']</span>' | replace: '[', '[%*tab*&' %}
+{% assign has_tabs = false %}
+{% assign desc_titles = '' %}
+{% assign desc_content = '' %}
+
+
+{% if desc_raw contains '[' %}
+  {% assign has_tabs = true %}
+{% endif %}
+
+{% if has_tabs %}
+  {% assign desc_raw = desc_raw | split: '[' %}
+
+  {% for desc in desc_raw %}
+    {% assign current_desc = desc | split: ']' %}
+    {% capture desc_titles %}{{ desc_titles }}~~{{ current_desc[0] }}{% endcapture %}
+    {% capture desc_content %}{{ desc_content }}~~{{ current_desc[1] }}{% endcapture %}
+  {% endfor %}
+
+  {% assign desc_titles = desc_titles | remove_first: '~~' | split: '~~' %}
+  {% assign desc_content = desc_content | remove_first: '~~' | split: '~~' %} 
+
+  {% assign desc_titles_orig = desc_titles %}
+  {% assign desc_content_orig = desc_content %}
+  
+  {% assign desc_titles = '' %}
+  {% assign desc_content = '' %}
+  
+  {% for desc in desc_titles_orig %}
+    {% unless desc == '' %}
+      {% capture desc_titles %}{{ desc_titles }}~~{{ desc }}{% endcapture %}
+    {% endunless %}
+  {% endfor %}
+
+  {% for desc in desc_content_orig %}
+    {% unless desc == '' %}
+      {% capture desc_content %}{{ desc_content }}~~{{ desc }}{% endcapture %}
+    {% endunless %}
+  {% endfor %}
+
+  {% assign desc_titles = desc_titles | remove_first: '~~' | split: '~~' %}
+  {% assign desc_content = desc_content | remove_first: '~~' | split: '~~' %} 
+
+{% endif %}
+
+{% if has_tabs %}
+  {% for tab in desc_titles %}
+      {% unless tab contains '%*tab*&' %}
+          {{ tab }}
+      {% endunless %}
+  {% endfor %}
+
+<div id="tab-container">
+      <ul class="tabs">
+          {% assign found_first = false %}
+          {% assign tab_count = 0 %}
+          {% for tab in desc_titles %}
+              {% if tab contains '%*tab*&' %}
+                  {% assign fix_tab = tab | remove: '%*tab*&' %}
+                  <li{% if found_first == false %} class="active"{% endif %} data-index="{{ tab_count }}">{{ fix_tab }}</li>
+              {% if found_first == false %}
+                {% assign found_first = true %}
+              {% endif %}
+              {% assign tab_count = tab_count | plus: 1 %}
+              {% endif %}
+          {% endfor %}
+      </ul>
+      <div class="clearfix"></div>
+
+      <ul class="tab-content">
+          {% assign found_first = false %}
+          {% assign desc_count = 0 %}
+          {% for content in desc_content %}
+              <li{% if found_first == false %} class="active"{% endif %} data-index="{{ desc_count }}">{{ content }}</li>
+            {% if found_first == false %}
+              {% assign found_first = true %}
+            {% endif %}
+            {% assign desc_count = desc_count | plus: 1 %}
+          {% endfor %}
+      </ul>
+  </div>
+{% else %}
+{{ product.description }}
+{% endif %}

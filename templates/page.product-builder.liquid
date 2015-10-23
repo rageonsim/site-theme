@@ -1,0 +1,18 @@
+<!-- /templates/page.liquid -->
+{% if customer %}
+{{ 'builder.min.css' | asset_url | stylesheet_tag }}
+
+<div id="rage-on"></div>
+
+<script>
+  var builderCustomer = '{{ customer.id }}';
+</script>
+{{ 'builder-libs.min.js' | asset_url | script_tag }}
+{{ 'builder.min.js' | asset_url | script_tag }}
+{% else %}         
+
+<script>
+	window.location.href = "/account/login";
+</script>
+
+{% endif %}

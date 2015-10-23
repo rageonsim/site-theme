@@ -1,0 +1,58 @@
+<!-- /templates/index.liquid -->
+<div class="main-slider">
+  
+{% for i in (1..12) %}
+  {% capture show_slide %}use_slide_{{ i }}{% endcapture %}
+  {% capture image %}slide-{{ i }}.jpg{% endcapture %}
+  {% capture link %}slide_{{ i }}_link{% endcapture %}
+  {% capture sort %}slide_{{ i }}_order{% endcapture %}
+
+  {% if settings[show_slide] %}
+  <a data-sort-order="{{ settings[sort] }}" href="{{ settings[link] }}">
+    <img class="lazyOwl" data-src="{{ image | asset_url }}" src="{{ image | asset_url }}" alt="RageOn! Banner Image - All Over Printing"/>
+  </a>
+  {% endif %}
+  
+{% endfor %}
+
+</div>
+
+<div class="promo-boxes grid">
+  
+  <div class="grid__item large--one-third">
+    <a href="{{ settings.promo_box_1_link }}">
+      <img class="promo-box promo-box-1" src="{{ 'promo-box-1.jpg' | asset_url }}" />
+      <div class="caption">
+        <h3>{{ settings.promo_box_1_text }}</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="grid__item large--one-third">
+    <a href="{{ settings.promo_box_2_link }}">
+      <img class="promo-box promo-box-2" src="{{ 'promo-box-2.jpg' | asset_url }}" />
+      <div class="caption">
+        <h3>{{ settings.promo_box_2_text }}</h3>
+      </div>
+    </a>
+  </div>
+  
+  <div class="grid__item large--one-third">
+    <a href="{{ settings.promo_box_3_link }}">
+      <img class="promo-box promo-box-3" src="{{ 'promo-box-3.jpg' | asset_url }}" />
+      <div class="caption">
+        <h3>{{ settings.promo_box_3_text }}</h3>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+<div class="grid-uniform home-products">
+
+  {% for product in collections.frontpage.products limit:32 %}
+    {% assign grid_item_width = 'large--one-quarter medium--one-half small--one-half' %}
+    {% include 'product-grid-item' %}
+  {% endfor %}
+
+</div>

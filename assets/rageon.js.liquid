@@ -1,0 +1,53 @@
+//=========================================================================
+//  Rageon Scripts
+//=========================================================================
+
+$(document).ready(function(){
+
+  if(iOS()){
+    $('a[href="/pages/builder"]').parent().css('display','none');
+    $('a[href="http://bitly.com/RageOn"]').parent().css('display','inline-block');
+    console.log('is ios');
+ 
+  }
+  else {
+  	$('a[href="/pages/builder"]').parent().css('display','inline-block');
+    $('a[href="http://bitly.com/RageOn"]').parent().css('display','none');
+    console.log('is not',$('a[href="bitly.com/RageOn"]').parent(),$('a[href="/pages/builder"]').parent());
+  }
+  /*
+  else{
+  	$('a[href="/pages/builder"]').parent().css('display','block');
+    $('a[href="bitly.com/RageOn"]').parent().css('display','none');
+  }
+
+  //disable custom creation products 
+  $('#custom-creations .indv-product a').bind('click',function(e){
+        e.preventDefault();
+  });
+  
+   */
+    
+});
+
+
+function iOS() {
+	
+  var iDevices = [
+    'iPad Simulator',
+    'iPhone Simulator',
+    'iPod Simulator',
+    'iPad',
+    'iPhone',
+    'iPod'
+  ];
+
+  while (iDevices.length) {
+    if (navigator.platform === iDevices.pop()){ 
+      console.log('device true');
+      return true; 
+    }
+  }
+
+  return false;
+}
