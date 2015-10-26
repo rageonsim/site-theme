@@ -1,0 +1,38 @@
+{% unless ((item.variant.title contains 'Default') or (item.variant.product.variants.size <= 1)) %}
+  {% capture opt_buffer %}
+    {% increment opt1 %}
+    {% increment opt2 %}
+    {% increment opt3 %}
+    {% for var in item.product.variants %}
+      {% if opt1 and (var.option1 != item.variant.option1) %}{% increment opt1 %}{% endif %}
+      {% if opt2 and (var.option2 != item.variant.option2) %}{% increment opt2 %}{% endif %}
+      {% if opt3 and (var.option3 != item.variant.option3) %}{% increment opt3 %}{% endif %}
+    {% endfor %}
+  {% endcapture %}
+  <small>{% if 'Show True Variant' %}{% endif
+  %}{% unless opt1 <= 1 
+    %}{{ item.variant.option1 
+    }}{% if opt2 > 1 
+      %}{{ " / " 
+    }}{% endif 
+  %}{% endunless 
+  %}{% unless opt2 <= 1 
+    %}{{ item.variant.option2 
+  }}{% endunless
+  %}{% unless opt3 <= 1 
+    %}{% if opt2 > 1 
+      %}{{ " / "
+    }}{% else
+      %}{% if opt1 > 1 
+        %}{{ " / "
+      }}{% endif 
+    %}{% endif
+    %}{{ item.variant.option3 
+  }}{% endunless 
+  %}</small>
+  {% capture opt_buffer %}
+    {% for i in (1..opt1) %}{% decrement opt1 %}{% endfor %}
+    {% for i in (1..opt2) %}{% decrement opt2 %}{% endfor %}
+    {% for i in (1..opt3) %}{% decrement opt3 %}{% endfor %}
+  {% endcapture %}
+{% endunless %}
